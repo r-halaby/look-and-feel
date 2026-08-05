@@ -74,7 +74,7 @@ export default function EventsPage() {
             return (
               <li
                 key={event.id}
-                className="group grid grid-cols-[auto_1fr] md:grid-cols-[120px_1fr_auto] gap-6 md:gap-10 py-8 border-t hairline"
+                className="group grid grid-cols-[auto_1fr] gap-6 md:gap-10 py-8 border-t hairline"
               >
                 <div className="flex flex-col">
                   <span className="text-[11px] tracking-[0.15em] text-muted">
@@ -87,7 +87,7 @@ export default function EventsPage() {
                     {d.year}
                   </span>
                 </div>
-                <div className="col-span-1 md:col-span-1">
+                <div>
                   <h3
                     className="text-2xl md:text-3xl font-light tracking-tight"
                     dangerouslySetInnerHTML={{ __html: event.title }}
@@ -100,19 +100,6 @@ export default function EventsPage() {
                       {event.description}
                     </p>
                   )}
-                </div>
-                <div className="col-span-2 md:col-span-1 flex md:flex-col md:items-end md:justify-between gap-4 md:text-right">
-                  {event.capacity && (
-                    <span className="text-[11px] tracking-[0.15em] uppercase text-muted">
-                      Capacity {event.capacity}
-                    </span>
-                  )}
-                  <button
-                    type="button"
-                    className="px-6 py-3 border hairline rounded-full text-[11px] tracking-[0.2em] uppercase hover:bg-accent hover:text-background hover:border-accent transition-colors"
-                  >
-                    Reserve
-                  </button>
                 </div>
               </li>
             );
