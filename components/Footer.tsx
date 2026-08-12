@@ -2,10 +2,10 @@ import { TowerIcon } from "./TowerIcon";
 
 export function Footer() {
   return (
-    <footer className="mt-32 border-t hairline">
-      <div className="flex items-end justify-between px-6 py-10 sm:px-10">
+    <footer className="mt-24 sm:mt-32 border-t hairline">
+      <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between px-5 py-8 sm:px-10 sm:py-10">
         <TowerIcon className="w-8 h-14 text-foreground" />
-        <div className="text-[10px] tracking-[0.2em] uppercase text-muted text-right leading-relaxed">
+        <div className="text-[10px] tracking-[0.2em] uppercase text-muted sm:text-right leading-relaxed">
           Look &amp; Feel
           <br />
           Hosted by Rahmi &middot;{" "}

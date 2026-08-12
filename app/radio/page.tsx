@@ -28,24 +28,25 @@ export default function RadioPage() {
           alt=""
           fill
           priority
+          sizes="100vw"
           className="object-cover object-center opacity-70"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/40 to-background" />
-        <div className="relative z-10 h-full flex flex-col justify-end px-6 sm:px-10 pb-16">
+        <div className="relative z-10 h-full flex flex-col justify-end px-5 sm:px-10 pb-12 sm:pb-16">
           <p className="text-[11px] tracking-[0.2em] uppercase text-muted mb-4">
             On air at Rodeo Radio
           </p>
-          <h1 className="text-[16vw] sm:text-[10vw] md:text-[8vw] leading-[0.9] font-light tracking-[-0.02em]">
+          <h1 className="text-[18vw] sm:text-[10vw] md:text-[8vw] leading-[0.9] font-light tracking-[-0.02em]">
             RADIO
           </h1>
         </div>
       </section>
 
-      <section className="px-6 sm:px-10 py-20 border-t hairline">
+      <section className="px-5 sm:px-10 py-16 sm:py-20 border-t hairline">
         <p className="text-[11px] tracking-[0.2em] uppercase text-muted mb-8">
           First Episode
         </p>
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-10 md:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-8 md:gap-16">
           <div>
             <p className="text-sm tracking-[0.15em] text-accent">
               Ep. {String(latest.number).padStart(3, "0")}
@@ -55,7 +56,7 @@ export default function RadioPage() {
             </p>
           </div>
           <div>
-            <h2 className="text-4xl md:text-6xl font-light tracking-[-0.01em] leading-[1.05]">
+            <h2 className="text-3xl sm:text-4xl md:text-6xl font-light tracking-[-0.01em] leading-[1.05] break-words">
               {latest.title}
             </h2>
             <p className="mt-3 text-sm tracking-[0.1em] uppercase text-muted">

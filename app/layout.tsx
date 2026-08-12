@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 
@@ -6,6 +6,13 @@ export const metadata: Metadata = {
   title: "Look & Feel — Hosted by Rahmi",
   description:
     "A study of the reciprocal relationship between sound and design. Explore the emotional and conceptual space behind visual practice.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0a0705",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
