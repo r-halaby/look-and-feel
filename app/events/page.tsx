@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Script from "next/script";
+
 import { events } from "@/data/events";
 import { Footer } from "@/components/Footer";
 
@@ -32,27 +34,33 @@ export default function EventsPage() {
 
   return (
     <div className="pt-24">
+      <Script
+        id="luma-checkout"
+        src="https://embed.lu.ma/checkout-button.js"
+        strategy="afterInteractive"
+      />
       <section className="relative w-full h-[55vh] min-h-[420px] overflow-hidden">
         <Image
           src="/hero.png"
           alt=""
           fill
           priority
+          sizes="100vw"
           className="object-cover object-center opacity-70"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/40 to-background" />
-        <div className="relative z-10 h-full flex flex-col justify-end px-6 sm:px-10 pb-16">
+        <div className="relative z-10 h-full flex flex-col justify-end px-5 sm:px-10 pb-12 sm:pb-16">
           <p className="text-[11px] tracking-[0.2em] uppercase text-muted mb-4">
-            Live broadcasts &middot; listening sessions
+            Gatherings &middot; listening sessions
           </p>
-          <h1 className="text-[16vw] sm:text-[10vw] md:text-[8vw] leading-[0.9] font-light tracking-[-0.02em]">
+          <h1 className="text-[18vw] sm:text-[10vw] md:text-[8vw] leading-[0.9] font-light tracking-[-0.02em]">
             EVENTS
           </h1>
         </div>
       </section>
 
-      <section className="px-6 sm:px-10 py-20 border-t hairline">
-        <div className="flex items-baseline justify-between mb-12">
+      <section className="px-5 sm:px-10 py-16 sm:py-20 border-t hairline">
+        <div className="flex items-baseline justify-between mb-10 sm:mb-12">
           <p className="text-[11px] tracking-[0.2em] uppercase text-muted">
             Upcoming
           </p>
@@ -74,22 +82,25 @@ export default function EventsPage() {
             return (
               <li
                 key={event.id}
-                className="group grid grid-cols-[auto_1fr] gap-6 md:gap-10 py-8 border-t hairline"
+                className="group grid grid-cols-[auto_1fr] md:grid-cols-[auto_1fr_auto] gap-5 sm:gap-6 md:gap-10 py-7 sm:py-8 border-t hairline"
               >
+                {/* Date */}
                 <div className="flex flex-col">
                   <span className="text-[11px] tracking-[0.15em] text-muted">
                     {d.month}
                   </span>
-                  <span className="text-5xl md:text-6xl font-light leading-none mt-1">
+                  <span className="text-4xl sm:text-5xl md:text-6xl font-light leading-none mt-1">
                     {d.day}
                   </span>
                   <span className="text-[11px] tracking-[0.15em] text-muted mt-1">
                     {d.year}
                   </span>
                 </div>
-                <div>
+
+                {/* Info */}
+                <div className="min-w-0">
                   <h3
-                    className="text-2xl md:text-3xl font-light tracking-tight"
+                    className="text-xl sm:text-2xl md:text-3xl font-light tracking-tight break-words"
                     dangerouslySetInnerHTML={{ __html: event.title }}
                   />
                   <p className="mt-2 text-[11px] tracking-[0.2em] uppercase text-muted">
@@ -100,7 +111,31 @@ export default function EventsPage() {
                       {event.description}
                     </p>
                   )}
+                  {event.lumaEventSlug && (
+                    <a
+                      href={`https://lu.ma/${event.lumaEventSlug}`}
+                      className="luma-checkout--button mt-6 inline-block text-[11px] tracking-[0.2em] uppercase border hairline px-5 py-3 hover:bg-foreground hover:text-background transition-colors"
+                      data-luma-action="checkout"
+                      data-luma-event-id={`evt-${event.lumaEventSlug}`}
+                    >
+                      Get Ticket
+                    </a>
+                  )}
                 </div>
+
+                {/* Event image */}
+                {event.image && (
+                  <div className="hidden md:block w-48 lg:w-64 shrink-0">
+                    <Image
+                      src={event.image}
+                      alt={event.title}
+                      width={0}
+                      height={0}
+                      sizes="256px"
+                      className="w-full h-auto"
+                    />
+                  </div>
+                )}
               </li>
             );
           })}
@@ -108,7 +143,7 @@ export default function EventsPage() {
       </section>
 
       {past.length > 0 && (
-        <section className="px-6 sm:px-10 py-20 border-t hairline">
+        <section className="px-5 sm:px-10 py-16 sm:py-20 border-t hairline">
           <p className="text-[11px] tracking-[0.2em] uppercase text-muted mb-10">
             Past
           </p>
@@ -118,16 +153,16 @@ export default function EventsPage() {
               return (
                 <li
                   key={event.id}
-                  className="grid grid-cols-[auto_1fr_auto] items-baseline gap-6 md:gap-10 py-6 border-t hairline text-muted"
+                  className="flex flex-col sm:grid sm:grid-cols-[auto_1fr_auto] sm:items-baseline gap-1 sm:gap-6 md:gap-10 py-6 border-t hairline text-muted"
                 >
                   <span className="text-xs md:text-sm tracking-[0.15em]">
                     {d.month} {d.day}, {d.year}
                   </span>
                   <h3
-                    className="text-lg md:text-xl font-light tracking-tight"
+                    className="text-lg md:text-xl font-light tracking-tight text-foreground/90 sm:text-inherit"
                     dangerouslySetInnerHTML={{ __html: event.title }}
                   />
-                  <span className="text-[11px] tracking-[0.15em] uppercase hidden sm:block">
+                  <span className="text-[11px] tracking-[0.15em] uppercase">
                     {event.city}
                   </span>
                 </li>
