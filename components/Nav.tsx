@@ -11,7 +11,9 @@ export function Nav() {
       }}
     >
       <Link
-        href="/"
+        href="https://evenings.fm/rodeo-radio"
+        target="_blank"
+        rel="noopener noreferrer"
         className="hidden sm:block text-[11px] tracking-[0.18em] uppercase leading-tight text-white"
       >
         Tune in to FM F.M.
@@ -19,7 +21,9 @@ export function Nav() {
         at Rodeo Radio
       </Link>
       <Link
-        href="/"
+        href="https://evenings.fm/rodeo-radio"
+        target="_blank"
+        rel="noopener noreferrer"
         aria-label="Look & Feel — home"
         className="sm:hidden text-[11px] tracking-[0.18em] uppercase text-white"
       >

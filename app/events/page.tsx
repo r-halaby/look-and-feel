@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Script from "next/script";
+
 import { events } from "@/data/events";
 import { Footer } from "@/components/Footer";
 
@@ -32,6 +34,11 @@ export default function EventsPage() {
 
   return (
     <div className="pt-24">
+      <Script
+        id="luma-checkout"
+        src="https://embed.lu.ma/checkout-button.js"
+        strategy="afterInteractive"
+      />
       <section className="relative w-full h-[55vh] min-h-[420px] overflow-hidden">
         <Image
           src="/hero.png"
@@ -44,7 +51,7 @@ export default function EventsPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/40 to-background" />
         <div className="relative z-10 h-full flex flex-col justify-end px-5 sm:px-10 pb-12 sm:pb-16">
           <p className="text-[11px] tracking-[0.2em] uppercase text-muted mb-4">
-            Live broadcasts &middot; listening sessions
+            Gatherings &middot; listening sessions
           </p>
           <h1 className="text-[18vw] sm:text-[10vw] md:text-[8vw] leading-[0.9] font-light tracking-[-0.02em]">
             EVENTS
@@ -75,8 +82,9 @@ export default function EventsPage() {
             return (
               <li
                 key={event.id}
-                className="group grid grid-cols-[auto_1fr] gap-5 sm:gap-6 md:gap-10 py-7 sm:py-8 border-t hairline"
+                className="group grid grid-cols-[auto_1fr] md:grid-cols-[auto_1fr_auto] gap-5 sm:gap-6 md:gap-10 py-7 sm:py-8 border-t hairline"
               >
+                {/* Date */}
                 <div className="flex flex-col">
                   <span className="text-[11px] tracking-[0.15em] text-muted">
                     {d.month}
@@ -88,6 +96,8 @@ export default function EventsPage() {
                     {d.year}
                   </span>
                 </div>
+
+                {/* Info */}
                 <div className="min-w-0">
                   <h3
                     className="text-xl sm:text-2xl md:text-3xl font-light tracking-tight break-words"
@@ -101,7 +111,31 @@ export default function EventsPage() {
                       {event.description}
                     </p>
                   )}
+                  {event.lumaEventSlug && (
+                    <a
+                      href={`https://lu.ma/${event.lumaEventSlug}`}
+                      className="luma-checkout--button mt-6 inline-block text-[11px] tracking-[0.2em] uppercase border hairline px-5 py-3 hover:bg-foreground hover:text-background transition-colors"
+                      data-luma-action="checkout"
+                      data-luma-event-id={`evt-${event.lumaEventSlug}`}
+                    >
+                      Get Ticket
+                    </a>
+                  )}
                 </div>
+
+                {/* Event image */}
+                {event.image && (
+                  <div className="hidden md:block w-48 lg:w-64 shrink-0">
+                    <Image
+                      src={event.image}
+                      alt={event.title}
+                      width={0}
+                      height={0}
+                      sizes="256px"
+                      className="w-full h-auto"
+                    />
+                  </div>
+                )}
               </li>
             );
           })}

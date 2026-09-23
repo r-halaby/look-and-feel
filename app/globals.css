@@ -3,9 +3,9 @@
 :root {
   --background: #0a0705;
   --foreground: #f5f0e8;
-  --muted: #8a7d6d;
+  --muted: #f5f0e8;
   --accent: #e85a2c;
-  --hairline: rgba(245, 240, 232, 0.14);
+  --hairline: #f5f0e8;
 }
 
 @theme inline {
@@ -41,4 +41,27 @@ body {
 
 .hairline {
   border-color: var(--hairline);
+}
+
+a.luma-checkout--button {
+  all: unset !important;
+  display: inline-block !important;
+  cursor: pointer !important;
+  font-family: inherit !important;
+  font-size: 11px !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  color: var(--foreground) !important;
+  background: transparent !important;
+  border: 1px solid var(--hairline) !important;
+  border-radius: 0 !important;
+  padding: 12px 20px !important;
+  margin-top: 24px !important;
+  transition: background-color 0.15s, color 0.15s !important;
+}
+
+a.luma-checkout--button:hover {
+  background: var(--foreground) !important;
+  color: var(--background) !important;
 }
