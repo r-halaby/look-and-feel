@@ -181,6 +181,97 @@ function AudioView({ episode }: { episode: Episode }) {
     (episode.tracks?.length ?? 0) > 0 ||
     (episode.chapters?.length ?? 0) > 0;
 
+  const audio = episode.audioUrl && (
+    <audio
+      ref={audioRef}
+      src={episode.audioUrl}
+      onTimeUpdate={() => {
+        const a = audioRef.current;
+        if (!a || !a.duration) return;
+        setCurrentTime(a.currentTime);
+        setProgress(a.currentTime / a.duration);
+      }}
+      onLoadedMetadata={() => {
+        if (audioRef.current) setDuration(audioRef.current.duration);
+      }}
+      onEnded={() => setPlaying(false)}
+      preload="metadata"
+    />
+  );
+
+  // ── No tracklist: full-bleed cover + compact player bar ──
+  if (!hasList) {
+    return (
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {audio}
+
+        {/* Compact player bar */}
+        <div className="shrink-0 bg-black border-b border-white/10 px-5 sm:px-10 py-3 flex items-center gap-5 sm:gap-8">
+          <div className="flex items-center gap-3 shrink-0">
+            <span className="text-[11px] tracking-[0.2em] uppercase text-white/35">
+              Ep. {String(episode.number).padStart(3, "0")}
+            </span>
+            <span className="text-white/20">—</span>
+            <span
+              className="text-[11px] tracking-[0.1em] uppercase text-white/70 truncate max-w-[240px]"
+              dangerouslySetInnerHTML={{ __html: episode.title }}
+            />
+          </div>
+
+          {episode.audioUrl ? (
+            <div className="flex items-center gap-4 flex-1 min-w-0">
+              <span className="text-[11px] tracking-[0.1em] text-white/35 tabular-nums shrink-0">
+                {fmt(currentTime)}
+              </span>
+              <div
+                className="flex-1 h-px bg-white/20 cursor-pointer relative"
+                onClick={seekFromBar}
+              >
+                <div
+                  className="absolute left-0 top-0 h-full bg-white"
+                  style={{ width: `${progress * 100}%` }}
+                />
+              </div>
+              <span className="text-[11px] tracking-[0.1em] text-white/35 tabular-nums shrink-0">
+                {duration > 0 ? fmt(duration) : "--:--"}
+              </span>
+              <button
+                onClick={toggle}
+                className="shrink-0 text-[11px] tracking-[0.2em] uppercase border border-white/30 px-4 py-1.5 hover:bg-white hover:text-black transition-colors"
+              >
+                {playing ? "Pause" : "Play"}
+              </button>
+            </div>
+          ) : (
+            <span className="text-[11px] tracking-[0.2em] uppercase text-white/30">
+              Audio coming soon
+            </span>
+          )}
+        </div>
+
+        {/* Full-bleed cover */}
+        {episode.coverImage ? (
+          <div className="flex-1 relative overflow-hidden">
+            <Image
+              src={episode.coverImage}
+              alt=""
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        ) : (
+          <div className="flex-1 flex items-center justify-center">
+            <p className="text-[11px] tracking-[0.2em] uppercase text-white/30">
+              No artwork
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // ── With tracklist: 16:9 cover + info left, tracklist right ──
   return (
     <div className="flex-1 flex overflow-hidden">
       {/* ── Left: cover + info ── */}
@@ -198,23 +289,7 @@ function AudioView({ episode }: { episode: Episode }) {
           </div>
         )}
 
-        {episode.audioUrl && (
-          <audio
-            ref={audioRef}
-            src={episode.audioUrl}
-            onTimeUpdate={() => {
-              const a = audioRef.current;
-              if (!a || !a.duration) return;
-              setCurrentTime(a.currentTime);
-              setProgress(a.currentTime / a.duration);
-            }}
-            onLoadedMetadata={() => {
-              if (audioRef.current) setDuration(audioRef.current.duration);
-            }}
-            onEnded={() => setPlaying(false)}
-            preload="metadata"
-          />
-        )}
+        {audio}
 
         {/* Episode info — solid black below cover */}
         <div className="bg-black shrink-0 px-5 sm:px-10 pt-10 sm:pt-14 pb-8 sm:pb-10">
@@ -264,14 +339,12 @@ function AudioView({ episode }: { episode: Episode }) {
       </div>
 
       {/* ── Right: tracklist ── */}
-      {hasList && (
-        <TracklistPanel
-          tracks={episode.tracks}
-          chapters={episode.chapters}
-          currentTime={currentTime}
-          onSeek={seekTo}
-        />
-      )}
+      <TracklistPanel
+        tracks={episode.tracks}
+        chapters={episode.chapters}
+        currentTime={currentTime}
+        onSeek={seekTo}
+      />
     </div>
   );
 }
