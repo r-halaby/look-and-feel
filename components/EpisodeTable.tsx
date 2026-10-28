@@ -26,16 +26,16 @@ export function EpisodeTable() {
       onMouseMove={(e) => setPos({ x: e.clientX, y: e.clientY })}
     >
       {/* Floating cover art follows cursor */}
-      {hoveredId && hovered?.coverImage && (
+      {hoveredId && (hovered?.hoverImage ?? hovered?.coverImage) && (
         <div
           className="fixed pointer-events-none z-50"
-          style={{ left: pos.x + 24, top: pos.y - 120, width: 220 }}
+          style={{ left: pos.x + 24, top: pos.y - 120, width: 180 }}
         >
           <Image
-            src={hovered.coverImage}
+            src={(hovered.hoverImage ?? hovered.coverImage)!}
             alt=""
-            width={220}
-            height={220}
+            width={180}
+            height={225}
             className="w-full h-auto shadow-xl"
             priority
           />
