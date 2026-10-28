@@ -183,20 +183,20 @@ function AudioView({ episode }: { episode: Episode }) {
 
   return (
     <div className="flex-1 flex overflow-hidden">
-      {/* ── Left: dark player ── */}
-      <div className="relative flex-1 flex flex-col overflow-hidden">
+      {/* ── Left: cover + info ── */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Cover image */}
         {episode.coverImage && (
-          <div className="absolute inset-0">
+          <div className="relative flex-1 overflow-hidden">
             <Image
               src={episode.coverImage}
               alt=""
               fill
-              className="object-cover opacity-20"
+              className="object-cover"
               priority
             />
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/30" />
 
         {episode.audioUrl && (
           <audio
@@ -216,15 +216,16 @@ function AudioView({ episode }: { episode: Episode }) {
           />
         )}
 
-        <div className="relative z-10 mt-auto px-5 sm:px-10 pb-10 sm:pb-14">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-white/40 mb-4">
+        {/* Episode info — solid black below cover */}
+        <div className="bg-black shrink-0 px-5 sm:px-10 py-6 sm:py-8">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-white/40 mb-3">
             Ep. {String(episode.number).padStart(3, "0")}
           </p>
           <h1
             className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-[-0.01em] leading-[1.05] mb-2"
             dangerouslySetInnerHTML={{ __html: episode.title }}
           />
-          <p className="text-[11px] tracking-[0.2em] uppercase text-white/40 mb-8">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-white/40 mb-6">
             {episode.guest}
           </p>
 
