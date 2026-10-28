@@ -187,7 +187,7 @@ function AudioView({ episode }: { episode: Episode }) {
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Cover image — 16:9 */}
         {episode.coverImage && (
-          <div className="relative w-full aspect-video shrink-0 overflow-hidden" style={{ maxWidth: "calc(45vh * 16 / 9)" }}>
+          <div className="relative w-full aspect-video shrink-0 overflow-hidden" style={{ maxWidth: "calc(55vh * 16 / 9)" }}>
             <Image
               src={episode.coverImage}
               alt=""
@@ -217,7 +217,7 @@ function AudioView({ episode }: { episode: Episode }) {
         )}
 
         {/* Episode info — solid black below cover */}
-        <div className="bg-black shrink-0 px-5 sm:px-10 py-6 sm:py-8">
+        <div className="bg-black shrink-0 px-5 sm:px-10 pt-10 sm:pt-14 pb-8 sm:pb-10">
           <p className="text-[11px] tracking-[0.2em] uppercase text-white/40 mb-3">
             Ep. {String(episode.number).padStart(3, "0")}
           </p>
@@ -303,7 +303,7 @@ function TracklistPanel({
   }, [activeIdx]);
 
   return (
-    <aside className="w-72 sm:w-80 lg:w-[360px] shrink-0 flex flex-col bg-[#f5f3ef] text-black border-l border-black/10 overflow-hidden">
+    <aside className="w-80 sm:w-96 lg:w-[440px] shrink-0 flex flex-col bg-[#f5f3ef] text-black border-l border-black/10 overflow-hidden">
       <header className="px-5 sm:px-6 py-4 border-b border-black/10 shrink-0">
         <span className="text-[10px] tracking-[0.25em] uppercase text-black/40">
           Tracklist
