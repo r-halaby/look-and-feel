@@ -66,9 +66,13 @@ export function EpisodePlayer({ episode }: { episode: Episode }) {
           ← Index
         </Link>
         <div className="flex items-center gap-5 sm:gap-6">
-          <TabBtn label="Video" active={tab === "video"} onClick={() => setTab("video")} />
+          {episode.videoUrl && (
+            <TabBtn label="Video" active={tab === "video"} onClick={() => setTab("video")} />
+          )}
           <TabBtn label="Audio" active={tab === "audio"} onClick={() => setTab("audio")} />
-          <TabBtn label="Visuals" active={tab === "visuals"} onClick={() => setTab("visuals")} />
+          {episode.photos?.length && (
+            <TabBtn label="Visuals" active={tab === "visuals"} onClick={() => setTab("visuals")} />
+          )}
         </div>
       </div>
 
