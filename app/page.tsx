@@ -1,5 +1,6 @@
 import { EpisodeTable } from "@/components/EpisodeTable";
 import { LiveBanner } from "@/components/LiveBanner";
+import { Footer } from "@/components/Footer";
 import { episodes } from "@/data/episodes";
 import { isLiveNow, getNextAirDate } from "@/data/schedule";
 
@@ -15,7 +16,7 @@ export default function Home() {
   });
 
   return (
-    <div className="px-5 sm:px-10 pt-8 sm:pt-10 pb-24">
+    <div className="px-5 sm:px-10 pt-8 sm:pt-10 min-h-screen flex flex-col">
       {live && <LiveBanner />}
 
       <div className="flex items-baseline justify-between mb-8 sm:mb-10">
@@ -27,6 +28,9 @@ export default function Home() {
         </span>
       </div>
       <EpisodeTable />
+      <div className="mt-auto">
+        <Footer />
+      </div>
     </div>
   );
 }
