@@ -291,47 +291,47 @@ function AudioView({ episode }: { episode: Episode }) {
 
         {audio}
 
-        {/* Episode info — solid black below cover */}
-        <div className="bg-black shrink-0 px-5 sm:px-10 pt-10 sm:pt-14 pb-8 sm:pb-10">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-white/40 mb-3">
+        {/* Episode info — white below cover */}
+        <div className="bg-white shrink-0 px-5 sm:px-10 pt-10 sm:pt-14 pb-8 sm:pb-10 border-t border-black/10">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-black/40 mb-3">
             Ep. {String(episode.number).padStart(3, "0")}
           </p>
           <h1
-            className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-[-0.01em] leading-[1.05] mb-2"
+            className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-[-0.01em] leading-[1.05] mb-2 text-black"
             dangerouslySetInnerHTML={{ __html: episode.title }}
           />
-          <p className="text-[11px] tracking-[0.2em] uppercase text-white/40 mb-6">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-black/40 mb-6">
             {episode.guest}
           </p>
 
           {episode.audioUrl ? (
             <div className="max-w-lg">
               <div className="flex items-center gap-4 mb-5">
-                <span className="text-[11px] tracking-[0.1em] text-white/40 tabular-nums w-10">
+                <span className="text-[11px] tracking-[0.1em] text-black/40 tabular-nums w-10">
                   {fmt(currentTime)}
                 </span>
                 <div
-                  className="flex-1 h-px bg-white/20 cursor-pointer relative"
+                  className="flex-1 h-px bg-black/20 cursor-pointer relative"
                   onClick={seekFromBar}
                 >
                   <div
-                    className="absolute left-0 top-0 h-full bg-white"
+                    className="absolute left-0 top-0 h-full bg-black"
                     style={{ width: `${progress * 100}%` }}
                   />
                 </div>
-                <span className="text-[11px] tracking-[0.1em] text-white/40 tabular-nums w-10 text-right">
+                <span className="text-[11px] tracking-[0.1em] text-black/40 tabular-nums w-10 text-right">
                   {duration > 0 ? fmt(duration) : "--:--"}
                 </span>
               </div>
               <button
                 onClick={toggle}
-                className="text-[11px] tracking-[0.2em] uppercase border border-white/30 px-5 py-3 hover:bg-white hover:text-black transition-colors"
+                className="text-[11px] tracking-[0.2em] uppercase border border-black/30 px-5 py-3 hover:bg-black hover:text-white transition-colors"
               >
                 {playing ? "Pause" : "Play"}
               </button>
             </div>
           ) : (
-            <p className="text-[11px] tracking-[0.2em] uppercase text-white/30">
+            <p className="text-[11px] tracking-[0.2em] uppercase text-black/30">
               Audio coming soon
             </p>
           )}
