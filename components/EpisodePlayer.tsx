@@ -184,10 +184,10 @@ function AudioView({ episode }: { episode: Episode }) {
   return (
     <div className="flex-1 flex overflow-hidden">
       {/* ── Left: cover + info ── */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 min-w-0 flex flex-col overflow-hidden" style={{ maxWidth: "calc(55vh * 16 / 9)" }}>
         {/* Cover image — 16:9 */}
         {episode.coverImage && (
-          <div className="relative w-full aspect-video shrink-0 overflow-hidden" style={{ maxWidth: "calc(55vh * 16 / 9)" }}>
+          <div className="relative w-full aspect-video shrink-0 overflow-hidden">
             <Image
               src={episode.coverImage}
               alt=""
