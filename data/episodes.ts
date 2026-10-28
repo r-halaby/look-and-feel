@@ -8,6 +8,8 @@ export type Episode = {
   description: string;
   audioUrl?: string;
   coverImage?: string;
+  videoUrl?: string;
+  photos?: string[];
 };
 
 export const episodes: Episode[] = [
@@ -17,7 +19,7 @@ export const episodes: Episode[] = [
     title: "LOOK &amp; FEEL RADIO 002",
     guest: "Rahmi Halaby",
     date: "2026-09-23",
-    duration: "",
+    duration: "87:57",
     description: "",
     audioUrl:
       "https://lbgavdwobkucivgs.public.blob.vercel-storage.com/look_and_feel_002.mp3",

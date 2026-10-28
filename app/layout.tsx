@@ -3,16 +3,16 @@ import "./globals.css";
 import { Nav } from "@/components/Nav";
 
 export const metadata: Metadata = {
-  title: "Look & Feel — Hosted by Rahmi",
+  title: "Look & Feel",
   description:
-    "A study of the reciprocal relationship between sound and design. Explore the emotional and conceptual space behind visual practice.",
+    "A study of the reciprocal relationship between sound and design.",
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  themeColor: "#0a0705",
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
