@@ -293,25 +293,25 @@ function AudioView({ episode }: { episode: Episode }) {
 
         {/* Episode info — white below cover */}
         <div className="bg-white shrink-0 px-5 sm:px-10 pt-10 sm:pt-14 pb-8 sm:pb-10 border-t border-black/10">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-black/40 mb-3">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-black mb-3">
             Ep. {String(episode.number).padStart(3, "0")}
           </p>
           <h1
             className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-[-0.01em] leading-[1.05] mb-2 text-black"
             dangerouslySetInnerHTML={{ __html: episode.title }}
           />
-          <p className="text-[11px] tracking-[0.2em] uppercase text-black/40 mb-6">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-black mb-6">
             {episode.guest}
           </p>
 
           {episode.audioUrl ? (
             <div className="max-w-lg">
               <div className="flex items-center gap-4 mb-5">
-                <span className="text-[11px] tracking-[0.1em] text-black/40 tabular-nums w-10">
+                <span className="text-[11px] tracking-[0.1em] text-black tabular-nums w-10">
                   {fmt(currentTime)}
                 </span>
                 <div
-                  className="flex-1 h-px bg-black/20 cursor-pointer relative"
+                  className="flex-1 h-px bg-black cursor-pointer relative"
                   onClick={seekFromBar}
                 >
                   <div
@@ -319,19 +319,19 @@ function AudioView({ episode }: { episode: Episode }) {
                     style={{ width: `${progress * 100}%` }}
                   />
                 </div>
-                <span className="text-[11px] tracking-[0.1em] text-black/40 tabular-nums w-10 text-right">
+                <span className="text-[11px] tracking-[0.1em] text-black tabular-nums w-10 text-right">
                   {duration > 0 ? fmt(duration) : "--:--"}
                 </span>
               </div>
               <button
                 onClick={toggle}
-                className="text-[11px] tracking-[0.2em] uppercase border border-black/30 px-5 py-3 hover:bg-black hover:text-white transition-colors"
+                className="text-[11px] tracking-[0.2em] uppercase border border-black px-5 py-3 hover:bg-black hover:text-white transition-colors"
               >
                 {playing ? "Pause" : "Play"}
               </button>
             </div>
           ) : (
-            <p className="text-[11px] tracking-[0.2em] uppercase text-black/30">
+            <p className="text-[11px] tracking-[0.2em] uppercase text-black">
               Audio coming soon
             </p>
           )}
