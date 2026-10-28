@@ -34,7 +34,7 @@ export const episodes: Episode[] = [
     title: "LOOK &amp; FEEL RADIO 004",
     guest: "",
     date: "2026-10-28",
-    duration: "90:25",
+    duration: "90:54",
     description: "",
     audioUrl: "https://lbgavdwobkucivgs.public.blob.vercel-storage.com/look%20%26%20feel%20Radio_ep004.mp3",
     coverImage: "/covers/ep-004-16x9.png",
