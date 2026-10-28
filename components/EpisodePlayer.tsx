@@ -185,9 +185,9 @@ function AudioView({ episode }: { episode: Episode }) {
     <div className="flex-1 flex overflow-hidden">
       {/* ── Left: cover + info ── */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        {/* Cover image */}
+        {/* Cover image — 16:9 */}
         {episode.coverImage && (
-          <div className="relative flex-1 overflow-hidden">
+          <div className="relative w-full aspect-video shrink-0 overflow-hidden">
             <Image
               src={episode.coverImage}
               alt=""
