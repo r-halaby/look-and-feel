@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="px-5 sm:px-10 pt-8 sm:pt-10">
+    <div className="px-5 sm:px-10 pt-8 sm:pt-10 min-h-screen flex flex-col">
       <div className="max-w-lg">
         <h1 className="text-[11px] tracking-[0.2em] uppercase text-muted mb-10">
           About
@@ -54,7 +54,9 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
-      <Footer />
+      <div className="mt-auto">
+        <Footer />
+      </div>
     </div>
   );
 }
