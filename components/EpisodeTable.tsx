@@ -68,7 +68,7 @@ export function EpisodeTable() {
               className="flex-1 min-w-0 text-sm sm:text-base font-light group-hover:text-accent transition-colors"
               dangerouslySetInnerHTML={{ __html: ep.title }}
             />
-            <span className="w-32 sm:w-36 shrink-0 text-sm text-muted hidden sm:block">
+            <span className="w-32 sm:w-36 shrink-0 text-sm text-muted hidden sm:block uppercase tracking-[0.1em]">
               {ep.guest}
             </span>
             <span className="w-28 sm:w-32 shrink-0 text-sm text-muted hidden sm:block">
