@@ -36,7 +36,7 @@ export const episodes: Episode[] = [
     date: "2026-10-21",
     duration: "91:00",
     description: "",
-    audioUrl: "", // TODO: upload to Vercel Blob and paste URL here
+    audioUrl: "https://lbgavdwobkucivgs.public.blob.vercel-storage.com/Look%20%26%20Feel%20Radio_ep003.mp3",
     coverImage: "/covers/ep-003-16x9.png",
     hoverImage: "/covers/ep-003-4x5.png",
   },
