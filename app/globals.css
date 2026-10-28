@@ -3,9 +3,9 @@
 :root {
   --background: #ffffff;
   --foreground: #111111;
-  --muted: #999999;
+  --muted: #111111;
   --accent: #e85a2c;
-  --hairline: #e5e5e5;
+  --hairline: #111111;
 }
 
 @theme inline {
