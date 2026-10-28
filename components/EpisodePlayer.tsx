@@ -52,7 +52,7 @@ export function EpisodePlayer({ episode }: { episode: Episode }) {
     <div className="relative h-screen bg-black text-white overflow-hidden flex flex-col">
       {/* Top bar */}
       <div
-        className="shrink-0 flex items-center justify-between px-5 sm:px-10 py-4 sm:py-5 z-20"
+        className="shrink-0 flex items-center justify-between px-5 sm:px-10 py-4 sm:py-5 z-20 bg-white border-b border-black/10"
         style={{
           paddingLeft: "max(1.25rem, env(safe-area-inset-left))",
           paddingRight: "max(1.25rem, env(safe-area-inset-right))",
@@ -61,7 +61,7 @@ export function EpisodePlayer({ episode }: { episode: Episode }) {
       >
         <Link
           href="/"
-          className="text-[11px] tracking-[0.2em] uppercase text-white/60 hover:text-white transition-colors"
+          className="text-[11px] tracking-[0.2em] uppercase text-black/50 hover:text-black transition-colors"
         >
           ← Index
         </Link>
@@ -95,7 +95,7 @@ function TabBtn({
     <button
       onClick={onClick}
       className={`text-[11px] tracking-[0.2em] uppercase transition-colors ${
-        active ? "text-white" : "text-white/35 hover:text-white/70"
+        active ? "text-black" : "text-black/35 hover:text-black/70"
       }`}
     >
       {label}
@@ -376,7 +376,7 @@ function TracklistPanel({
   }, [activeIdx]);
 
   return (
-    <aside className="flex-1 min-w-[320px] flex flex-col bg-[#f5f3ef] text-black border-l border-black/10 overflow-hidden">
+    <aside className="flex-1 min-w-[320px] flex flex-col bg-white text-black border-l border-black/10 overflow-hidden">
       <header className="px-5 sm:px-6 py-4 border-b border-black/10 shrink-0">
         <span className="text-[10px] tracking-[0.25em] uppercase text-black/40">
           Tracklist
@@ -391,33 +391,33 @@ function TracklistPanel({
               key={i}
               ref={isActive ? activeRef : undefined}
               onClick={() => onSeek(item.timeSec)}
-              className={`w-full text-left px-5 sm:px-6 py-4 border-b border-black/[0.07] flex items-start gap-4 sm:gap-5 hover:bg-black/[0.04] transition-colors group ${
-                isActive ? "bg-black/[0.06]" : ""
+              className={`w-full text-left px-5 sm:px-6 py-4 border-b border-black/[0.07] flex items-center gap-4 sm:gap-5 hover:bg-black hover:border-black transition-colors group ${
+                isActive ? "bg-black/[0.04]" : ""
               }`}
             >
-              <span className="text-[11px] font-mono text-black/35 tabular-nums shrink-0 pt-0.5 w-10">
+              <span className="text-[11px] font-mono text-black/35 tabular-nums shrink-0 w-10 group-hover:text-white/50">
                 {fmtTimestamp(item.timeSec)}
               </span>
 
               <div className="flex-1 min-w-0">
                 {item.kind === "track" ? (
                   <>
-                    <p className={`text-[12px] tracking-[0.08em] uppercase leading-tight truncate ${isActive ? "font-medium" : ""}`}>
+                    <p className={`text-[12px] tracking-[0.08em] uppercase leading-tight truncate group-hover:text-white ${isActive ? "font-medium" : ""}`}>
                       {item.title}
                     </p>
                     {item.artist && (
-                      <p className="text-[11px] tracking-[0.05em] uppercase text-black/40 truncate mt-0.5">
+                      <p className="text-[11px] tracking-[0.05em] uppercase text-black/40 truncate mt-0.5 group-hover:text-white/60">
                         {item.artist}
                       </p>
                     )}
                   </>
                 ) : (
                   <>
-                    <p className={`text-[12px] tracking-[0.08em] uppercase leading-tight text-accent truncate ${isActive ? "font-medium" : ""}`}>
+                    <p className={`text-[12px] tracking-[0.08em] uppercase leading-tight text-accent truncate group-hover:text-white ${isActive ? "font-medium" : ""}`}>
                       {item.label}
                     </p>
                     {item.guest && (
-                      <p className="text-[11px] tracking-[0.05em] uppercase text-black/40 truncate mt-0.5">
+                      <p className="text-[11px] tracking-[0.05em] uppercase text-black/40 truncate mt-0.5 group-hover:text-white/60">
                         with {item.guest}
                       </p>
                     )}
@@ -426,7 +426,7 @@ function TracklistPanel({
               </div>
 
               {isActive && (
-                <span className="text-[10px] text-black/30 shrink-0 pt-0.5">▶</span>
+                <span className="w-2 h-2 rounded-full bg-accent shrink-0" />
               )}
             </button>
           );
