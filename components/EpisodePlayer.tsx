@@ -105,12 +105,29 @@ function TabBtn({
 
 // ── Video ──────────────────────────────────────────────
 
+function ExpandIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+      <path d="M8 1h4v4M5 12H1V8M12 1L7.5 5.5M1 12l4.5-4.5" />
+    </svg>
+  );
+}
+
+function CollapseIcon() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+      <path d="M12 5H8V1M1 8h4v4M8 1L3.5 5.5M5 12l4.5-4.5" />
+    </svg>
+  );
+}
+
 function VideoView({ episode }: { episode: Episode }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [expanded, setExpanded] = useState(false);
 
   const toggle = () => {
     const v = videoRef.current;
@@ -224,20 +241,80 @@ function VideoView({ episode }: { episode: Episode }) {
     );
   }
 
-  // ── With tracklist: 16:9 video + info left, tracklist right ──
+  const playOverlay = !playing && (
+    <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+      <div className="w-14 h-14 border border-white/40 flex items-center justify-center">
+        <span className="text-white text-base">▶</span>
+      </div>
+    </div>
+  );
+
+  // ── Expanded: full-bleed video + mini player bar ──
+  if (expanded) {
+    return (
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Full-bleed video */}
+        <div className="flex-1 relative overflow-hidden cursor-pointer" onClick={toggle}>
+          {videoEl}
+          {playOverlay}
+        </div>
+
+        {/* Mini player bar */}
+        <div className="shrink-0 bg-white border-t border-black px-5 sm:px-10 py-3 flex items-center gap-5 sm:gap-8">
+          <div className="flex items-center gap-3 shrink-0">
+            <span className="text-[11px] tracking-[0.2em] uppercase text-black">
+              Ep. {String(episode.number).padStart(3, "0")}
+            </span>
+            <span className="text-black/30">—</span>
+            <span
+              className="text-[11px] tracking-[0.1em] uppercase text-black truncate max-w-[240px]"
+              dangerouslySetInnerHTML={{ __html: episode.title }}
+            />
+          </div>
+          <div className="flex items-center gap-4 flex-1 min-w-0">
+            <span className="text-[11px] tracking-[0.1em] text-black tabular-nums shrink-0">
+              {fmt(currentTime)}
+            </span>
+            <div className="flex-1 h-px bg-black cursor-pointer relative" onClick={seekFromBar}>
+              <div className="absolute left-0 top-0 h-full bg-black" style={{ width: `${progress * 100}%` }} />
+            </div>
+            <span className="text-[11px] tracking-[0.1em] text-black tabular-nums shrink-0">
+              {duration > 0 ? fmt(duration) : "--:--"}
+            </span>
+            <button
+              onClick={toggle}
+              className="shrink-0 text-[11px] tracking-[0.2em] uppercase text-black border border-black px-4 py-1.5 hover:bg-black hover:text-white transition-colors"
+            >
+              {playing ? "Pause" : "Play"}
+            </button>
+            <button
+              onClick={() => setExpanded(false)}
+              className="shrink-0 text-black/50 hover:text-black transition-colors"
+              title="Exit full view"
+            >
+              <CollapseIcon />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ── Split: 16:9 video + info left, tracklist right ──
   return (
     <div className="flex-1 flex overflow-hidden">
       <div className="flex-1 min-w-0 flex flex-col overflow-hidden" style={{ maxWidth: "calc(55vh * 16 / 9)" }}>
-        {/* 16:9 video */}
+        {/* 16:9 video with expand button */}
         <div className="relative w-full aspect-video shrink-0 overflow-hidden cursor-pointer" onClick={toggle}>
           {videoEl}
-          {!playing && (
-            <div className="absolute inset-0 flex items-center justify-center z-10">
-              <div className="w-14 h-14 border border-white/40 flex items-center justify-center hover:bg-white/10 transition-colors">
-                <span className="text-white text-base">▶</span>
-              </div>
-            </div>
-          )}
+          {playOverlay}
+          <button
+            onClick={(e) => { e.stopPropagation(); setExpanded(true); }}
+            className="absolute top-3 right-3 z-20 text-white/60 hover:text-white transition-colors bg-black/30 hover:bg-black/50 p-2"
+            title="Full view"
+          >
+            <ExpandIcon />
+          </button>
         </div>
 
         {/* Episode info */}
@@ -257,14 +334,8 @@ function VideoView({ episode }: { episode: Episode }) {
               <span className="text-[11px] tracking-[0.1em] text-black tabular-nums w-10">
                 {fmt(currentTime)}
               </span>
-              <div
-                className="flex-1 h-px bg-black cursor-pointer relative"
-                onClick={seekFromBar}
-              >
-                <div
-                  className="absolute left-0 top-0 h-full bg-black"
-                  style={{ width: `${progress * 100}%` }}
-                />
+              <div className="flex-1 h-px bg-black cursor-pointer relative" onClick={seekFromBar}>
+                <div className="absolute left-0 top-0 h-full bg-black" style={{ width: `${progress * 100}%` }} />
               </div>
               <span className="text-[11px] tracking-[0.1em] text-black tabular-nums w-10 text-right">
                 {duration > 0 ? fmt(duration) : "--:--"}
