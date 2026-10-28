@@ -29,6 +29,18 @@ export type Episode = {
 
 export const episodes: Episode[] = [
   {
+    id: "ep-004",
+    number: 4,
+    title: "LOOK &amp; FEEL RADIO 004",
+    guest: "",
+    date: "2026-10-28",
+    duration: "90:25",
+    description: "",
+    audioUrl: "https://lbgavdwobkucivgs.public.blob.vercel-storage.com/look%20%26%20feel%20Radio_ep004.mp3",
+    coverImage: "/covers/ep-004-16x9.png",
+    hoverImage: "/covers/ep-004-4x5.png",
+  },
+  {
     id: "ep-003",
     number: 3,
     title: "LOOK &amp; FEEL RADIO 003",
