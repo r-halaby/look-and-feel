@@ -377,8 +377,8 @@ function TracklistPanel({
 
   return (
     <aside className="flex-1 min-w-[320px] flex flex-col bg-white text-black border-l border-black overflow-hidden">
-      <header className="px-5 sm:px-6 py-4 border-b border-black shrink-0">
-        <span className="text-[10px] tracking-[0.25em] uppercase text-black">
+      <header className="px-5 sm:px-6 py-4 border-b border-black shrink-0 bg-black">
+        <span className="text-[10px] tracking-[0.25em] uppercase text-white">
           Tracklist
         </span>
       </header>
