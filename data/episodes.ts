@@ -19,7 +19,8 @@ export type Episode = {
   duration: string;
   description: string;
   audioUrl?: string;
-  coverImage?: string;
+  coverImage?: string;   // 16:9, used in the audio/video player
+  hoverImage?: string;   // 4:5, used for the index table hover thumbnail
   videoUrl?: string;
   photos?: string[];
   tracks?: Track[];
@@ -27,6 +28,18 @@ export type Episode = {
 };
 
 export const episodes: Episode[] = [
+  {
+    id: "ep-003",
+    number: 3,
+    title: "LOOK &amp; FEEL RADIO 003",
+    guest: "Rahmi Halaby",
+    date: "2026-10-21",
+    duration: "91:00",
+    description: "",
+    audioUrl: "", // TODO: upload to Vercel Blob and paste URL here
+    coverImage: "/covers/ep-003-16x9.png",
+    hoverImage: "/covers/ep-003-4x5.png",
+  },
   {
     id: "ep-002",
     number: 2,
