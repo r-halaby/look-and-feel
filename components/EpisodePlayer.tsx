@@ -45,7 +45,8 @@ function buildList(tracks?: Track[], chapters?: Chapter[]): ListItem[] {
 }
 
 export function EpisodePlayer({ episode }: { episode: Episode }) {
-  const defaultTab: Tab = episode.videoUrl ? "video" : "audio";
+  const hasList = (episode.tracks?.length ?? 0) > 0 || (episode.chapters?.length ?? 0) > 0;
+  const defaultTab: Tab = hasList ? "audio" : episode.videoUrl ? "video" : "audio";
   const [tab, setTab] = useState<Tab>(defaultTab);
 
   return (
