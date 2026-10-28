@@ -325,7 +325,7 @@ function AudioView({ episode }: { episode: Episode }) {
               </div>
               <button
                 onClick={toggle}
-                className="text-[11px] tracking-[0.2em] uppercase border border-black px-5 py-3 hover:bg-black hover:text-white transition-colors"
+                className="text-[11px] tracking-[0.2em] uppercase text-black border border-black px-5 py-3 hover:bg-black hover:text-white transition-colors"
               >
                 {playing ? "Pause" : "Play"}
               </button>
@@ -376,9 +376,9 @@ function TracklistPanel({
   }, [activeIdx]);
 
   return (
-    <aside className="flex-1 min-w-[320px] flex flex-col bg-white text-black border-l border-black/10 overflow-hidden">
-      <header className="px-5 sm:px-6 py-4 border-b border-black/10 shrink-0">
-        <span className="text-[10px] tracking-[0.25em] uppercase text-black/40">
+    <aside className="flex-1 min-w-[320px] flex flex-col bg-white text-black border-l border-black overflow-hidden">
+      <header className="px-5 sm:px-6 py-4 border-b border-black shrink-0">
+        <span className="text-[10px] tracking-[0.25em] uppercase text-black">
           Tracklist
         </span>
       </header>
@@ -391,11 +391,11 @@ function TracklistPanel({
               key={i}
               ref={isActive ? activeRef : undefined}
               onClick={() => onSeek(item.timeSec)}
-              className={`w-full text-left px-5 sm:px-6 py-4 border-b border-black/[0.07] flex items-center gap-4 sm:gap-5 hover:bg-black hover:border-black transition-colors group ${
+              className={`w-full text-left px-5 sm:px-6 py-4 border-b border-black flex items-center gap-4 sm:gap-5 hover:bg-black transition-colors group ${
                 isActive ? "bg-black/[0.04]" : ""
               }`}
             >
-              <span className="text-[11px] font-mono text-black/35 tabular-nums shrink-0 w-10 group-hover:text-white/50">
+              <span className="text-[11px] font-mono text-black tabular-nums shrink-0 w-10 group-hover:text-white">
                 {fmtTimestamp(item.timeSec)}
               </span>
 
@@ -406,7 +406,7 @@ function TracklistPanel({
                       {item.title}
                     </p>
                     {item.artist && (
-                      <p className="text-[11px] tracking-[0.05em] uppercase text-black/40 truncate mt-0.5 group-hover:text-white/60">
+                      <p className="text-[11px] tracking-[0.05em] uppercase text-black truncate mt-0.5 group-hover:text-white">
                         {item.artist}
                       </p>
                     )}
@@ -417,7 +417,7 @@ function TracklistPanel({
                       {item.label}
                     </p>
                     {item.guest && (
-                      <p className="text-[11px] tracking-[0.05em] uppercase text-black/40 truncate mt-0.5 group-hover:text-white/60">
+                      <p className="text-[11px] tracking-[0.05em] uppercase text-black truncate mt-0.5 group-hover:text-white">
                         with {item.guest}
                       </p>
                     )}
