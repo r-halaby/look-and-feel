@@ -20,9 +20,15 @@ export function Nav() {
         Look &amp; Feel
       </Link>
       <div className="flex items-center gap-6 sm:gap-8 text-[11px] tracking-[0.2em] uppercase text-muted">
-        <Link href="/about" className="hover:text-foreground transition-colors">
-          About
-        </Link>
+        {pathname === "/about" ? (
+          <Link href="/" className="hover:text-foreground transition-colors">
+            Index
+          </Link>
+        ) : (
+          <Link href="/about" className="hover:text-foreground transition-colors">
+            About
+          </Link>
+        )}
       </div>
     </nav>
   );
