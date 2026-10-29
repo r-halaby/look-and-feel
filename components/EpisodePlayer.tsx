@@ -632,21 +632,19 @@ function TracklistPanel({
         </span>
       </header>
 
-      {/* Active track album art + design credits from Discogs */}
+      {/* Active track: credits (left) + album art thumbnail (right) */}
       {discogsData?.imageUrl && (
-        <div className="shrink-0 border-b border-black">
+        <div className="shrink-0 border-b border-black px-5 sm:px-6 py-5 flex items-center gap-6">
+          <div className="flex-1 space-y-2">
+            {discogsData.credits.map((c, i) => (
+              <p key={i} className="text-[10px] tracking-[0.18em] uppercase leading-tight">
+                <span className="text-black/40">{c.role}:</span>{" "}
+                <span className="text-black">{c.name}</span>
+              </p>
+            ))}
+          </div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={discogsData.imageUrl} alt="" className="w-full h-auto block" />
-          {discogsData.credits.length > 0 && (
-            <div className="px-5 sm:px-6 py-4 space-y-1">
-              {discogsData.credits.map((c, i) => (
-                <div key={i} className="flex items-baseline justify-between gap-4">
-                  <span className="text-[10px] tracking-[0.2em] uppercase text-black/40 shrink-0">{c.role}</span>
-                  <span className="text-[11px] tracking-[0.08em] uppercase text-black text-right">{c.name}</span>
-                </div>
-              ))}
-            </div>
-          )}
+          <img src={discogsData.imageUrl} alt="" className="w-28 h-28 object-cover shrink-0 block" />
         </div>
       )}
 
