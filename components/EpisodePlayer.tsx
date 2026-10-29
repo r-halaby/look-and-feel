@@ -8,7 +8,7 @@ import type { Episode, Track, Chapter } from "@/data/episodes";
 type Tab = "video" | "audio" | "visuals";
 
 type ListItem =
-  | { kind: "track"; timeSec: number; timeStr: string; title: string; artist: string; coverImage?: string; coverCredit?: string }
+  | { kind: "track"; timeSec: number; timeStr: string; title: string; artist: string; album?: string; coverImage?: string; coverCredit?: string }
   | { kind: "chapter"; timeSec: number; timeStr: string; label: string; guest?: string };
 
 function parseTime(t: string): number {
@@ -32,6 +32,7 @@ function buildList(tracks?: Track[], chapters?: Chapter[]): ListItem[] {
       timeStr: t.time,
       title: t.title,
       artist: t.artist,
+      album: t.album,
       coverImage: t.coverImage,
       coverCredit: t.coverCredit,
     })),
@@ -630,6 +631,7 @@ function TracklistPanel({
     if (!item || item.kind !== "track") { setter(null); return; }
     if (discogsCache.current[idx] !== undefined) { setter(discogsCache.current[idx]); return; }
     const params = new URLSearchParams({ artist: item.artist, title: item.title });
+    if (item.album) params.set("album", item.album);
     fetch(`/api/discogs?${params}`)
       .then((r) => r.json())
       .then((data) => { discogsCache.current[idx] = data; setter(data); })
