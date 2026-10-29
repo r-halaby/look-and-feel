@@ -635,9 +635,8 @@ function TracklistPanel({
       {/* Active track album art + design credits from Discogs */}
       {discogsData?.imageUrl && (
         <div className="shrink-0 border-b border-black">
-          <div className="relative w-full aspect-square overflow-hidden">
-            <Image src={discogsData.imageUrl} alt="" fill className="object-cover" unoptimized />
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={discogsData.imageUrl} alt="" className="w-full h-auto block" />
           {discogsData.credits.length > 0 && (
             <div className="px-5 sm:px-6 py-4 space-y-1">
               {discogsData.credits.map((c, i) => (
