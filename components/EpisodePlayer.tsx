@@ -611,7 +611,7 @@ function TracklistPanel({
   }, [activeIdx]);
 
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
-  const leaveTimer = useRef<ReturnType<typeof setTimeout>>();
+  const leaveTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const handleRowEnter = (i: number) => {
     clearTimeout(leaveTimer.current);
     setHoveredIdx(i);
