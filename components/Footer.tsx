@@ -2,8 +2,15 @@ export function Footer({ className }: { className?: string }) {
   return (
     <footer className={className ?? "mt-24 sm:mt-32 border-t hairline"}>
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between px-5 py-8 sm:px-10 sm:py-10">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/tower-icon.gif" alt="" className="w-8 h-14 object-contain" aria-hidden="true" />
+        <video
+          src="/tower-icon.mp4"
+          className="w-8 h-14 object-contain"
+          autoPlay
+          loop
+          muted
+          playsInline
+          aria-hidden="true"
+        />
         <div className="text-[10px] tracking-[0.2em] uppercase text-muted sm:text-right leading-relaxed">
           Look &amp; Feel
           <br />
