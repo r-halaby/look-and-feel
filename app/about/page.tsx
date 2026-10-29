@@ -63,7 +63,8 @@ export default function AboutPage() {
             loop
             muted
             playsInline
-            className="w-full h-auto"
+            className="h-auto"
+            style={{ width: 540 }}
           />
         </div>
       </div>
