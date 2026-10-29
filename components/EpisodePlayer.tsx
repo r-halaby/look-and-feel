@@ -633,15 +633,11 @@ function TracklistPanel({
       </header>
 
       {/* Active track album art + design credits from Discogs */}
-      {activeIdx >= 0 && items[activeIdx]?.kind === "track" && (
+      {discogsData?.imageUrl && (
         <div className="shrink-0 border-b border-black">
-          {discogsData?.imageUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={discogsData.imageUrl} alt="" className="w-full h-auto block" />
-          ) : (
-            <div className="w-full aspect-square bg-black/5" />
-          )}
-          {discogsData?.credits && discogsData.credits.length > 0 && (
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={discogsData.imageUrl} alt="" className="w-full h-auto block" />
+          {discogsData.credits.length > 0 && (
             <div className="px-5 sm:px-6 py-4 space-y-1">
               {discogsData.credits.map((c, i) => (
                 <div key={i} className="flex items-baseline justify-between gap-4">
