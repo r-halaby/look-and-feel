@@ -56,15 +56,14 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="mt-10 sm:mt-0 sm:flex-1">
+        <div className="mt-10 sm:mt-0 overflow-hidden shrink-0" style={{ width: 540, height: 540 }}>
           <video
             src="/video/about-loop.mp4"
             autoPlay
             loop
             muted
             playsInline
-            className="h-auto"
-            style={{ width: 540 }}
+            className="w-full h-full object-cover"
           />
         </div>
       </div>
