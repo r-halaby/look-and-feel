@@ -68,7 +68,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <div className="mt-auto pt-10">
+      <div className="pt-10">
         <Footer />
       </div>
     </div>
