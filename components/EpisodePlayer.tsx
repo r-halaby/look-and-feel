@@ -361,6 +361,8 @@ function VideoView({ episode }: { episode: Episode }) {
         chapters={episode.chapters}
         currentTime={currentTime}
         onSeek={seekTo}
+        coverImage={episode.coverImage}
+        coverCredit={episode.coverCredit}
       />
     </div>
   );
@@ -565,6 +567,8 @@ function AudioView({ episode }: { episode: Episode }) {
         chapters={episode.chapters}
         currentTime={currentTime}
         onSeek={seekTo}
+        coverImage={episode.coverImage}
+        coverCredit={episode.coverCredit}
       />
     </div>
   );
@@ -577,11 +581,15 @@ function TracklistPanel({
   chapters,
   currentTime,
   onSeek,
+  coverImage,
+  coverCredit,
 }: {
   tracks?: Track[];
   chapters?: Chapter[];
   currentTime: number;
   onSeek: (seconds: number) => void;
+  coverImage?: string;
+  coverCredit?: string;
 }) {
   const items = buildList(tracks, chapters);
 
@@ -603,6 +611,21 @@ function TracklistPanel({
           Tracklist
         </span>
       </header>
+
+      {/* Cover art + credit */}
+      {coverImage && (
+        <div className="shrink-0 border-b border-black">
+          <div className="relative w-full aspect-square overflow-hidden">
+            <Image src={coverImage} alt="" fill className="object-cover" />
+          </div>
+          {coverCredit && (
+            <div className="px-5 sm:px-6 py-4 flex items-baseline justify-between">
+              <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">Cover</span>
+              <span className="text-[11px] tracking-[0.1em] uppercase text-black">{coverCredit}</span>
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="flex-1 overflow-y-auto">
         {items.map((item, i) => {
