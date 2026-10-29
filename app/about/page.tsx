@@ -56,7 +56,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="mt-10 sm:mt-0 sm:flex-1 sm:max-w-lg">
+        <div className="mt-10 sm:mt-0 sm:flex-1">
           <video
             src="/video/about-loop.mp4"
             autoPlay
