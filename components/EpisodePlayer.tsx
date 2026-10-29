@@ -611,6 +611,14 @@ function TracklistPanel({
   }, [activeIdx]);
 
   const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const leaveTimer = useRef<ReturnType<typeof setTimeout>>();
+  const handleRowEnter = (i: number) => {
+    clearTimeout(leaveTimer.current);
+    setHoveredIdx(i);
+  };
+  const handleRowLeave = () => {
+    leaveTimer.current = setTimeout(() => setHoveredIdx(null), 120);
+  };
   const displayIdx = hoveredIdx ?? activeIdx;
 
   const [discogsData, setDiscogsData] = useState<{
@@ -676,8 +684,8 @@ function TracklistPanel({
               key={i}
               ref={isActive ? activeRef : undefined}
               onClick={() => onSeek(item.timeSec)}
-              onMouseEnter={() => setHoveredIdx(i)}
-              onMouseLeave={() => setHoveredIdx(null)}
+              onMouseEnter={() => handleRowEnter(i)}
+              onMouseLeave={handleRowLeave}
               className={`w-full text-left px-5 sm:px-6 py-4 border-b border-black flex items-center gap-4 sm:gap-5 hover:bg-black transition-colors group ${
                 isActive ? "bg-black/[0.04]" : ""
               }`}

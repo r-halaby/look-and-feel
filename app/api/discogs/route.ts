@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import Anthropic from "@anthropic-ai/sdk";
 
 const TOKEN = process.env.DISCOGS_TOKEN;
+const ai = new Anthropic();
 const HEADERS = { "User-Agent": "LookAndFeelRadio/1.0 +https://looknfeel.xyz" };
 const DESIGN_ROLES = ["Design", "Cover Design", "Art Direction", "Artwork", "Cover", "Photography", "Illustration"];
 
@@ -50,6 +52,25 @@ export async function GET(req: NextRequest) {
       credits = (release.extraartists ?? [])
         .filter((a: { role?: string }) => DESIGN_ROLES.some((r) => a.role?.includes(r)))
         .map((a: { role: string; name: string }) => ({ role: a.role, name: a.name }));
+    }
+  }
+
+  // AI fallback: ask Claude for design credits when Discogs has none
+  if (credits.length === 0 && imageUrl) {
+    try {
+      const msg = await ai.messages.create({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 256,
+        messages: [{
+          role: "user",
+          content: `Who are the design/artwork credits for the album "${cleanTitle}" by "${cleanArtist}"? I'm looking for roles like Art Director, Designer, Photographer, Illustrator, Cover Design. Return ONLY a JSON array like [{"role":"Art Director","name":"Full Name"}]. Return [] if you are not confident. Do not guess.`,
+        }],
+      });
+      const text = msg.content[0].type === "text" ? msg.content[0].text : "";
+      const match = text.match(/\[[\s\S]*\]/);
+      if (match) credits = JSON.parse(match[0]);
+    } catch {
+      // ignore, fall through with empty credits
     }
   }
 
