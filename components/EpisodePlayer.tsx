@@ -654,27 +654,29 @@ function TracklistPanel({
         </span>
       </header>
 
-      {/* Active track: credits (left) + album art thumbnail (right) */}
-      {discogsData?.imageUrl && (
-        <div className="shrink-0 border-b border-black px-5 sm:px-6 py-5 flex items-center gap-6">
-          {discogsData.credits.length > 0 && (
-            <div className="flex-1 space-y-2">
-              {discogsData.credits.map((c, i) => (
-                <p key={i} className="text-[10px] tracking-[0.18em] uppercase leading-tight">
-                  <span className="text-black/40">{c.role}:</span>{" "}
-                  <span className="text-black">{c.name}</span>
-                </p>
-              ))}
-            </div>
-          )}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={discogsData.imageUrl}
-            alt=""
-            className={`w-28 h-28 object-cover shrink-0 block ${discogsData.credits.length === 0 ? "mx-auto" : ""}`}
-          />
-        </div>
-      )}
+      {/* Fixed-height cover art section — always present so the list never shifts */}
+      <div className="shrink-0 border-b border-black h-[152px] px-5 sm:px-6 py-5 flex items-center gap-6">
+        {discogsData?.imageUrl && (
+          <>
+            {discogsData.credits.length > 0 && (
+              <div className="flex-1 space-y-2">
+                {discogsData.credits.map((c, i) => (
+                  <p key={i} className="text-[10px] tracking-[0.18em] uppercase leading-tight">
+                    <span className="text-black/40">{c.role}:</span>{" "}
+                    <span className="text-black">{c.name}</span>
+                  </p>
+                ))}
+              </div>
+            )}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={discogsData.imageUrl}
+              alt=""
+              className={`w-28 h-28 object-cover shrink-0 block ${discogsData.credits.length === 0 ? "mx-auto" : ""}`}
+            />
+          </>
+        )}
+      </div>
 
       <div className="flex-1 overflow-y-auto">
         {items.map((item, i) => {
