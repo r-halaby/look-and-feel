@@ -64,7 +64,7 @@ export default function AboutPage() {
             muted
             playsInline
             className="w-full h-full object-cover"
-            style={{ transform: "scale(1.05) rotate(-1deg)" }}
+            style={{ transform: "scale(1.05) rotate(-2deg)" }}
           />
         </div>
       </div>
