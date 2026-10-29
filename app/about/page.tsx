@@ -9,7 +9,7 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <div className="px-5 sm:px-10 pt-8 sm:pt-10 min-h-screen flex flex-col">
-      <div className="flex flex-col sm:flex-row sm:items-start sm:gap-16 flex-1">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:gap-16">
         <div className="max-w-lg shrink-0">
           <h1 className="text-[11px] tracking-[0.2em] uppercase text-muted mb-10">
             About
