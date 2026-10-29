@@ -68,7 +68,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <div className="pt-10">
+      <div className="[&>footer]:mt-8 [&>footer]:sm:mt-10">
         <Footer />
       </div>
     </div>
