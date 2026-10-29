@@ -8,7 +8,7 @@ import type { Episode, Track, Chapter } from "@/data/episodes";
 type Tab = "video" | "audio" | "visuals";
 
 type ListItem =
-  | { kind: "track"; timeSec: number; timeStr: string; title: string; artist: string }
+  | { kind: "track"; timeSec: number; timeStr: string; title: string; artist: string; coverImage?: string; coverCredit?: string }
   | { kind: "chapter"; timeSec: number; timeStr: string; label: string; guest?: string };
 
 function parseTime(t: string): number {
@@ -32,6 +32,8 @@ function buildList(tracks?: Track[], chapters?: Chapter[]): ListItem[] {
       timeStr: t.time,
       title: t.title,
       artist: t.artist,
+      coverImage: t.coverImage,
+      coverCredit: t.coverCredit,
     })),
     ...(chapters ?? []).map((c) => ({
       kind: "chapter" as const,
@@ -361,8 +363,6 @@ function VideoView({ episode }: { episode: Episode }) {
         chapters={episode.chapters}
         currentTime={currentTime}
         onSeek={seekTo}
-        coverImage={episode.coverImage}
-        coverCredit={episode.coverCredit}
       />
     </div>
   );
@@ -567,8 +567,6 @@ function AudioView({ episode }: { episode: Episode }) {
         chapters={episode.chapters}
         currentTime={currentTime}
         onSeek={seekTo}
-        coverImage={episode.coverImage}
-        coverCredit={episode.coverCredit}
       />
     </div>
   );
@@ -581,15 +579,11 @@ function TracklistPanel({
   chapters,
   currentTime,
   onSeek,
-  coverImage,
-  coverCredit,
 }: {
   tracks?: Track[];
   chapters?: Chapter[];
   currentTime: number;
   onSeek: (seconds: number) => void;
-  coverImage?: string;
-  coverCredit?: string;
 }) {
   const items = buildList(tracks, chapters);
 
@@ -612,20 +606,26 @@ function TracklistPanel({
         </span>
       </header>
 
-      {/* Cover art + credit */}
-      {coverImage && (
-        <div className="shrink-0 border-b border-black">
-          <div className="relative w-full aspect-square overflow-hidden">
-            <Image src={coverImage} alt="" fill className="object-cover" />
-          </div>
-          {coverCredit && (
-            <div className="px-5 sm:px-6 py-4 flex items-baseline justify-between">
-              <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">Cover</span>
-              <span className="text-[11px] tracking-[0.1em] uppercase text-black">{coverCredit}</span>
+      {/* Active track cover art + credit */}
+      {(() => {
+        const active = activeIdx >= 0 ? items[activeIdx] : null;
+        const img = active?.kind === "track" ? active.coverImage : undefined;
+        const credit = active?.kind === "track" ? active.coverCredit : undefined;
+        if (!img) return null;
+        return (
+          <div className="shrink-0 border-b border-black">
+            <div className="relative w-full aspect-square overflow-hidden">
+              <Image src={img} alt="" fill className="object-cover" priority />
             </div>
-          )}
-        </div>
-      )}
+            {credit && (
+              <div className="px-5 sm:px-6 py-4 flex items-baseline justify-between">
+                <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">Cover</span>
+                <span className="text-[11px] tracking-[0.1em] uppercase text-black">{credit}</span>
+              </div>
+            )}
+          </div>
+        );
+      })()}
 
       <div className="flex-1 overflow-y-auto">
         {items.map((item, i) => {

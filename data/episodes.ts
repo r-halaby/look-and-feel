@@ -2,6 +2,8 @@ export type Track = {
   time: string;
   title: string;
   artist: string;
+  coverImage?: string;
+  coverCredit?: string;
 };
 
 export type Chapter = {
@@ -21,7 +23,6 @@ export type Episode = {
   audioUrl?: string;
   coverImage?: string;   // 16:9, used in the audio/video player
   hoverImage?: string;   // 4:5, used for the index table hover thumbnail
-  coverCredit?: string;  // designer credit shown in tracklist panel
   videoUrl?: string;
   photos?: string[];
   tracks?: Track[];
