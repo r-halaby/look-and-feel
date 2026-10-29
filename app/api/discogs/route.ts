@@ -12,11 +12,16 @@ export async function GET(req: NextRequest) {
   if (!TOKEN) return NextResponse.json({ error: "DISCOGS_TOKEN not set" }, { status: 500 });
   if (!artist && !title) return NextResponse.json({ error: "Missing artist or title" }, { status: 400 });
 
+  // Strip parenthetical qualifiers from title: (Live), (Dirty), (Remix), etc.
+  const cleanTitle = title.replace(/\s*\([^)]*\)\s*$/, "").trim();
+  // Use only the primary artist when multiple are listed
+  const cleanArtist = artist.split(/,|(?:\s+(?:ft\.?|feat\.?)\s+)/i)[0].trim();
+
   // Search for the release
   const searchRes = await fetch(
     `https://api.discogs.com/database/search?${new URLSearchParams({
-      artist,
-      track: title,
+      artist: cleanArtist,
+      track: cleanTitle,
       type: "release",
       token: TOKEN,
       per_page: "5",
