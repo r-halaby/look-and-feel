@@ -63,7 +63,8 @@ export default function AboutPage() {
             loop
             muted
             playsInline
-            className="w-full h-full object-cover scale-105"
+            className="w-full h-full object-cover"
+            style={{ transform: "scale(1.05) rotate(-1deg)" }}
           />
         </div>
       </div>
