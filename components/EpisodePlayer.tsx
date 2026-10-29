@@ -619,32 +619,34 @@ function TracklistPanel({
   const handleRowLeave = () => {
     leaveTimer.current = setTimeout(() => setHoveredIdx(null), 120);
   };
-  const displayIdx = hoveredIdx ?? activeIdx;
 
-  const [discogsData, setDiscogsData] = useState<{
-    imageUrl: string | null;
-    credits: { role: string; name: string }[];
-  } | null>(null);
-  const discogsCache = useRef<Record<number, typeof discogsData>>({});
+  type DiscogsResult = { imageUrl: string | null; credits: { role: string; name: string }[] } | null;
+  const [activeDiscogsData, setActiveDiscogsData] = useState<DiscogsResult>(null);
+  const [hoverDiscogsData, setHoverDiscogsData] = useState<DiscogsResult>(null);
+  const discogsCache = useRef<Record<number, DiscogsResult>>({});
 
-  useEffect(() => {
-    const display = displayIdx >= 0 ? items[displayIdx] : null;
-    if (!display || display.kind !== "track") { setDiscogsData(null); return; }
-
-    if (discogsCache.current[displayIdx] !== undefined) {
-      setDiscogsData(discogsCache.current[displayIdx]);
-      return;
-    }
-
-    const params = new URLSearchParams({ artist: display.artist, title: display.title });
+  const fetchDiscogs = (idx: number, setter: (d: DiscogsResult) => void) => {
+    const item = idx >= 0 ? items[idx] : null;
+    if (!item || item.kind !== "track") { setter(null); return; }
+    if (discogsCache.current[idx] !== undefined) { setter(discogsCache.current[idx]); return; }
+    const params = new URLSearchParams({ artist: item.artist, title: item.title });
     fetch(`/api/discogs?${params}`)
       .then((r) => r.json())
-      .then((data) => {
-        discogsCache.current[displayIdx] = data;
-        setDiscogsData(data);
-      })
-      .catch(() => setDiscogsData(null));
-  }, [displayIdx]);
+      .then((data) => { discogsCache.current[idx] = data; setter(data); })
+      .catch(() => { discogsCache.current[idx] = null; });
+  };
+
+  // Always track the active (playing) track
+  useEffect(() => { fetchDiscogs(activeIdx, setActiveDiscogsData); }, [activeIdx]);
+
+  // Separately track the hovered track; clear when not hovering
+  useEffect(() => {
+    if (hoveredIdx === null || hoveredIdx === activeIdx) { setHoverDiscogsData(null); return; }
+    fetchDiscogs(hoveredIdx, setHoverDiscogsData);
+  }, [hoveredIdx, activeIdx]);
+
+  // Show hover data when it has an image; otherwise always show active track's data
+  const displayData = (hoverDiscogsData?.imageUrl ? hoverDiscogsData : null) ?? activeDiscogsData;
 
   return (
     <aside className="flex-1 min-w-[320px] flex flex-col bg-white text-black border-l border-black overflow-hidden">
@@ -656,11 +658,11 @@ function TracklistPanel({
 
       {/* Fixed-height cover art section — always present so the list never shifts */}
       <div className="shrink-0 border-b border-black h-[152px] px-5 sm:px-6 py-5 flex items-center gap-6">
-        {discogsData?.imageUrl && (
+        {displayData?.imageUrl && (
           <>
-            {discogsData.credits.length > 0 && (
+            {displayData.credits.length > 0 && (
               <div className="flex-1 space-y-2">
-                {discogsData.credits.map((c, i) => (
+                {displayData.credits.map((c, i) => (
                   <p key={i} className="text-[10px] tracking-[0.18em] uppercase leading-tight">
                     <span className="text-black/40">{c.role}:</span>{" "}
                     <span className="text-black">{c.name}</span>
@@ -670,9 +672,9 @@ function TracklistPanel({
             )}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={discogsData.imageUrl}
+              src={displayData.imageUrl}
               alt=""
-              className={`w-28 h-28 object-cover shrink-0 block ${discogsData.credits.length === 0 ? "mx-auto" : ""}`}
+              className={`w-28 h-28 object-cover shrink-0 block ${displayData.credits.length === 0 ? "mx-auto" : ""}`}
             />
           </>
         )}
