@@ -68,9 +68,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      <div className="[&>footer]:mt-8 [&>footer]:sm:mt-10">
-        <Footer />
-      </div>
+      <Footer className="mt-8 sm:mt-10 border-t hairline" />
     </div>
   );
 }
