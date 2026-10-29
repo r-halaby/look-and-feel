@@ -598,6 +598,32 @@ function TracklistPanel({
     activeRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [activeIdx]);
 
+  // Discogs data for the active track
+  const [discogsData, setDiscogsData] = useState<{
+    imageUrl: string | null;
+    credits: { role: string; name: string }[];
+  } | null>(null);
+  const discogsCache = useRef<Record<number, typeof discogsData>>({});
+
+  useEffect(() => {
+    const active = activeIdx >= 0 ? items[activeIdx] : null;
+    if (!active || active.kind !== "track") { setDiscogsData(null); return; }
+
+    if (discogsCache.current[activeIdx] !== undefined) {
+      setDiscogsData(discogsCache.current[activeIdx]);
+      return;
+    }
+
+    const params = new URLSearchParams({ artist: active.artist, title: active.title });
+    fetch(`/api/discogs?${params}`)
+      .then((r) => r.json())
+      .then((data) => {
+        discogsCache.current[activeIdx] = data;
+        setDiscogsData(data);
+      })
+      .catch(() => setDiscogsData(null));
+  }, [activeIdx]);
+
   return (
     <aside className="flex-1 min-w-[320px] flex flex-col bg-white text-black border-l border-black overflow-hidden">
       <header className="px-5 sm:px-6 py-4 border-b border-black shrink-0 bg-black">
@@ -606,26 +632,24 @@ function TracklistPanel({
         </span>
       </header>
 
-      {/* Active track cover art + credit */}
-      {(() => {
-        const active = activeIdx >= 0 ? items[activeIdx] : null;
-        const img = active?.kind === "track" ? active.coverImage : undefined;
-        const credit = active?.kind === "track" ? active.coverCredit : undefined;
-        if (!img) return null;
-        return (
-          <div className="shrink-0 border-b border-black">
-            <div className="relative w-full aspect-square overflow-hidden">
-              <Image src={img} alt="" fill className="object-cover" priority />
-            </div>
-            {credit && (
-              <div className="px-5 sm:px-6 py-4 flex items-baseline justify-between">
-                <span className="text-[10px] tracking-[0.2em] uppercase text-black/40">Cover</span>
-                <span className="text-[11px] tracking-[0.1em] uppercase text-black">{credit}</span>
-              </div>
-            )}
+      {/* Active track album art + design credits from Discogs */}
+      {discogsData?.imageUrl && (
+        <div className="shrink-0 border-b border-black">
+          <div className="relative w-full aspect-square overflow-hidden">
+            <Image src={discogsData.imageUrl} alt="" fill className="object-cover" unoptimized />
           </div>
-        );
-      })()}
+          {discogsData.credits.length > 0 && (
+            <div className="px-5 sm:px-6 py-4 space-y-1">
+              {discogsData.credits.map((c, i) => (
+                <div key={i} className="flex items-baseline justify-between gap-4">
+                  <span className="text-[10px] tracking-[0.2em] uppercase text-black/40 shrink-0">{c.role}</span>
+                  <span className="text-[11px] tracking-[0.08em] uppercase text-black text-right">{c.name}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
 
       <div className="flex-1 overflow-y-auto">
         {items.map((item, i) => {
