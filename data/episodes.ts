@@ -53,7 +53,7 @@ export const episodes: Episode[] = [
       { time: "38:36", title: "Gentleman",                                     artist: "Meshell Ndegeocello, Yerba Buena, Ron Blake",      album: "Red Hot + Riot" },
       { time: "45:03", title: "My Foolish Heart (Live At The Auditorio Nacional De Musica, Madrid, Spain / December 2, 2012)", artist: "Chick Corea", album: "Trilogy (Deluxe Edition)" },
       { time: "53:50", title: "Boundless Beings (Georgia Anne Muldrow Remix)", artist: "Nubya Garcia",                                    album: "Source We Move" },
-      { time: "56:21", title: "God Is Fair Sexy Nasty (Dirty)",                artist: "Mac Miller ft Kendrick Lamar",                    album: "Circles" },
+      { time: "56:21", title: "God Is Fair Sexy Nasty (Dirty)",                artist: "Mac Miller ft Kendrick Lamar",                    album: "The Divine Feminine" },
       { time: "64:07", title: "Sorrow Tears & Blood (2022 Mix)",               artist: "Bilal, Zap Mama, Common",                         album: "Red Hot + Riot" },
       { time: "71:09", title: "The Next Movement (Dirty)",                     artist: "The Roots ft DJ Jazzy Jeff & Jazzyfatnastees",    album: "Things Fall Apart" },
       { time: "74:44", title: "Mashita (Joe Kay's Slowed Edit)",               artist: "Mansur Brown",                                    album: "Slowed Edits Vol. III" },
