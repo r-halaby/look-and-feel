@@ -185,6 +185,12 @@ function VideoView({ episode }: { episode: Episode }) {
         setCurrentTime(v.currentTime);
         setProgress(v.currentTime / v.duration);
       }}
+      onSeeked={() => {
+        const v = videoRef.current;
+        if (!v) return;
+        setCurrentTime(v.currentTime);
+        if (v.duration) setProgress(v.currentTime / v.duration);
+      }}
       onLoadedMetadata={() => {
         if (videoRef.current) setDuration(videoRef.current.duration);
       }}
@@ -413,6 +419,12 @@ function AudioView({ episode }: { episode: Episode }) {
         if (!a || !a.duration) return;
         setCurrentTime(a.currentTime);
         setProgress(a.currentTime / a.duration);
+      }}
+      onSeeked={() => {
+        const a = audioRef.current;
+        if (!a) return;
+        setCurrentTime(a.currentTime);
+        if (a.duration) setProgress(a.currentTime / a.duration);
       }}
       onLoadedMetadata={() => {
         if (audioRef.current) setDuration(audioRef.current.duration);
