@@ -10,24 +10,24 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const artist = searchParams.get("artist") ?? "";
   const title = searchParams.get("title") ?? "";
+  const album = searchParams.get("album") ?? "";
 
   if (!TOKEN) return NextResponse.json({ error: "DISCOGS_TOKEN not set" }, { status: 500 });
-  if (!artist && !title) return NextResponse.json({ error: "Missing artist or title" }, { status: 400 });
+  if (!artist && !title && !album) return NextResponse.json({ error: "Missing artist or title" }, { status: 400 });
 
   // Strip parenthetical qualifiers from title: (Live), (Dirty), (Remix), etc.
   const cleanTitle = title.replace(/\s*\([^)]*\)\s*$/, "").trim();
   // Use only the primary artist when multiple are listed
   const cleanArtist = artist.split(/,|(?:\s+(?:ft\.?|feat\.?)\s+)/i)[0].trim();
 
+  // When album name is known, search by release_title + artist (finds the actual album, not a single)
+  const queryParams = album
+    ? { artist: cleanArtist, release_title: album, type: "release", token: TOKEN, per_page: "5" }
+    : { artist: cleanArtist, track: cleanTitle, type: "release", token: TOKEN, per_page: "5" };
+
   // Search for the release
   const searchRes = await fetch(
-    `https://api.discogs.com/database/search?${new URLSearchParams({
-      artist: cleanArtist,
-      track: cleanTitle,
-      type: "release",
-      token: TOKEN,
-      per_page: "5",
-    })}`,
+    `https://api.discogs.com/database/search?${new URLSearchParams(queryParams)}`,
     { headers: HEADERS, next: { revalidate: 86400 } }
   );
 
@@ -59,11 +59,11 @@ export async function GET(req: NextRequest) {
   if (credits.length === 0 && imageUrl) {
     try {
       const msg = await ai.messages.create({
-        model: "claude-haiku-4-5-20251001",
+        model: "claude-sonnet-4-6",
         max_tokens: 256,
         messages: [{
           role: "user",
-          content: `Who are the design/artwork credits for the album "${cleanTitle}" by "${cleanArtist}"? I'm looking for roles like Art Director, Designer, Photographer, Illustrator, Cover Design. Return ONLY a JSON array like [{"role":"Art Director","name":"Full Name"}]. Return [] if you are not confident. Do not guess.`,
+          content: `Who are the design/artwork credits for the album "${album || cleanTitle}" by "${cleanArtist}"? I'm looking for roles like Art Director, Designer, Photographer, Illustrator, Cover Design. Return ONLY a JSON array like [{"role":"Art Director","name":"Full Name"}]. Return [] if you are not confident. Do not guess.`,
         }],
       });
       const text = msg.content[0].type === "text" ? msg.content[0].text : "";

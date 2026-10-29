@@ -2,6 +2,7 @@ export type Track = {
   time: string;
   title: string;
   artist: string;
+  album?: string;
   coverImage?: string;
   coverCredit?: string;
 };
@@ -42,21 +43,21 @@ export const episodes: Episode[] = [
     coverImage: "/covers/ep-004-16x9.png",
     hoverImage: "/covers/ep-004-4x5.png",
     tracks: [
-      { time: "0:00",  title: "Caged Bird",                                    artist: "Ekep Nkwelle" },
-      { time: "4:13",  title: "You're My Everything (Live At Yoshi's Japanese Restaurant, Oakland, CA / October 12, 2010)", artist: "Chick Corea" },
-      { time: "15:39", title: "The Visionary",                                 artist: "Kamasi Washington & Terrace Martin" },
-      { time: "16:14", title: "Eye Never Knew",                                artist: "Butcher Brown" },
-      { time: "19:09", title: "You Got Me (Dirty)",                            artist: "The Roots ft Erykah Badu & Eve" },
-      { time: "22:53", title: "Armando's Rhumba (Live At The Festivalna Dvorana Lent, Maribor, Slovenia / November 21, 2012)", artist: "Chick Corea" },
-      { time: "31:31", title: "Cómo Remolino",                                 artist: "New Jazz Underground, Axel Tosca, Gina D'Soto" },
-      { time: "38:36", title: "Gentleman",                                     artist: "Meshell Ndegeocello, Yerba Buena, Ron Blake" },
-      { time: "45:03", title: "My Foolish Heart (Live At The Auditorio Nacional De Musica, Madrid, Spain / December 2, 2012)", artist: "Chick Corea" },
-      { time: "53:50", title: "Boundless Beings (Georgia Anne Muldrow Remix)", artist: "Nubya Garcia" },
-      { time: "56:21", title: "God Is Fair Sexy Nasty (Dirty)",                artist: "Mac Miller ft Kendrick Lamar" },
-      { time: "64:07", title: "Sorrow Tears & Blood (2022 Mix)",               artist: "Bilal, Zap Mama, Common" },
-      { time: "71:09", title: "The Next Movement (Dirty)",                     artist: "The Roots ft DJ Jazzy Jeff & Jazzyfatnastees" },
-      { time: "74:44", title: "Mashita (Joe Kay's Slowed Edit)",               artist: "Mansur Brown" },
-      { time: "77:26", title: "The Song Is You (Live At The Antalya Culture Center, Antalya, Turkey / November 28, 2012)", artist: "Chick Corea" },
+      { time: "0:00",  title: "Caged Bird",                                    artist: "Ekep Nkwelle",                                   album: "Caged Bird" },
+      { time: "4:13",  title: "You're My Everything (Live At Yoshi's Japanese Restaurant, Oakland, CA / October 12, 2010)", artist: "Chick Corea", album: "Trilogy (Deluxe Edition)" },
+      { time: "15:39", title: "The Visionary",                                 artist: "Kamasi Washington & Terrace Martin",              album: "Fearless Movement" },
+      { time: "16:14", title: "Eye Never Knew",                                artist: "Butcher Brown",                                   album: "Solar Music" },
+      { time: "19:09", title: "You Got Me (Dirty)",                            artist: "The Roots ft Erykah Badu & Eve",                  album: "Things Fall Apart" },
+      { time: "22:53", title: "Armando's Rhumba (Live At The Festivalna Dvorana Lent, Maribor, Slovenia / November 21, 2012)", artist: "Chick Corea", album: "Trilogy (Deluxe Edition)" },
+      { time: "31:31", title: "Cómo Remolino",                                 artist: "New Jazz Underground, Axel Tosca, Gina D'Soto",   album: "Harlem to Havana: Afro-Cuban Modernism VOL.1" },
+      { time: "38:36", title: "Gentleman",                                     artist: "Meshell Ndegeocello, Yerba Buena, Ron Blake",      album: "Red Hot + Riot" },
+      { time: "45:03", title: "My Foolish Heart (Live At The Auditorio Nacional De Musica, Madrid, Spain / December 2, 2012)", artist: "Chick Corea", album: "Trilogy (Deluxe Edition)" },
+      { time: "53:50", title: "Boundless Beings (Georgia Anne Muldrow Remix)", artist: "Nubya Garcia",                                    album: "Source We Move" },
+      { time: "56:21", title: "God Is Fair Sexy Nasty (Dirty)",                artist: "Mac Miller ft Kendrick Lamar",                    album: "Circles" },
+      { time: "64:07", title: "Sorrow Tears & Blood (2022 Mix)",               artist: "Bilal, Zap Mama, Common",                         album: "Red Hot + Riot" },
+      { time: "71:09", title: "The Next Movement (Dirty)",                     artist: "The Roots ft DJ Jazzy Jeff & Jazzyfatnastees",    album: "Things Fall Apart" },
+      { time: "74:44", title: "Mashita (Joe Kay's Slowed Edit)",               artist: "Mansur Brown",                                    album: "Slowed Edits Vol. III" },
+      { time: "77:26", title: "The Song Is You (Live At The Antalya Culture Center, Antalya, Turkey / November 28, 2012)", artist: "Chick Corea", album: "Trilogy (Deluxe Edition)" },
     ],
   },
   {
