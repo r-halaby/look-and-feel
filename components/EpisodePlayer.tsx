@@ -610,7 +610,9 @@ function TracklistPanel({
     activeRef.current?.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }, [activeIdx]);
 
-  // Discogs data for the active track
+  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+  const displayIdx = hoveredIdx ?? activeIdx;
+
   const [discogsData, setDiscogsData] = useState<{
     imageUrl: string | null;
     credits: { role: string; name: string }[];
@@ -618,23 +620,23 @@ function TracklistPanel({
   const discogsCache = useRef<Record<number, typeof discogsData>>({});
 
   useEffect(() => {
-    const active = activeIdx >= 0 ? items[activeIdx] : null;
-    if (!active || active.kind !== "track") { setDiscogsData(null); return; }
+    const display = displayIdx >= 0 ? items[displayIdx] : null;
+    if (!display || display.kind !== "track") { setDiscogsData(null); return; }
 
-    if (discogsCache.current[activeIdx] !== undefined) {
-      setDiscogsData(discogsCache.current[activeIdx]);
+    if (discogsCache.current[displayIdx] !== undefined) {
+      setDiscogsData(discogsCache.current[displayIdx]);
       return;
     }
 
-    const params = new URLSearchParams({ artist: active.artist, title: active.title });
+    const params = new URLSearchParams({ artist: display.artist, title: display.title });
     fetch(`/api/discogs?${params}`)
       .then((r) => r.json())
       .then((data) => {
-        discogsCache.current[activeIdx] = data;
+        discogsCache.current[displayIdx] = data;
         setDiscogsData(data);
       })
       .catch(() => setDiscogsData(null));
-  }, [activeIdx]);
+  }, [displayIdx]);
 
   return (
     <aside className="flex-1 min-w-[320px] flex flex-col bg-white text-black border-l border-black overflow-hidden">
@@ -674,6 +676,8 @@ function TracklistPanel({
               key={i}
               ref={isActive ? activeRef : undefined}
               onClick={() => onSeek(item.timeSec)}
+              onMouseEnter={() => setHoveredIdx(i)}
+              onMouseLeave={() => setHoveredIdx(null)}
               className={`w-full text-left px-5 sm:px-6 py-4 border-b border-black flex items-center gap-4 sm:gap-5 hover:bg-black transition-colors group ${
                 isActive ? "bg-black/[0.04]" : ""
               }`}
