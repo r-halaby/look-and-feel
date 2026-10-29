@@ -21,13 +21,13 @@ export async function GET(req: NextRequest) {
   const cleanArtist = artist.split(/,|(?:\s+(?:ft\.?|feat\.?)\s+)/i)[0].trim();
 
   // When album name is known, search by release_title + artist (finds the actual album, not a single)
-  const queryParams = album
-    ? { artist: cleanArtist, release_title: album, type: "release", token: TOKEN, per_page: "5" }
-    : { artist: cleanArtist, track: cleanTitle, type: "release", token: TOKEN, per_page: "5" };
+  const baseParams: Record<string, string> = { artist: cleanArtist, type: "release", token: TOKEN, per_page: "5" };
+  if (album) baseParams.release_title = album;
+  else baseParams.track = cleanTitle;
 
   // Search for the release
   const searchRes = await fetch(
-    `https://api.discogs.com/database/search?${new URLSearchParams(queryParams)}`,
+    `https://api.discogs.com/database/search?${new URLSearchParams(baseParams)}`,
     { headers: HEADERS, next: { revalidate: 86400 } }
   );
 
