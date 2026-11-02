@@ -56,7 +56,7 @@ export default function AboutPage() {
           </div>
         </div>
 
-        <div className="mt-10 sm:mt-0 ml-auto overflow-hidden shrink-0 w-full sm:w-[540px] sm:h-[540px] aspect-square sm:aspect-auto">
+        <div className="mt-10 sm:mt-0 ml-auto overflow-hidden shrink-0 w-full aspect-square sm:w-[540px] sm:h-[540px] sm:aspect-[1/1]">
           <video
             src="/video/about-loop.mp4"
             autoPlay
