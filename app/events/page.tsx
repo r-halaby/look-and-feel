@@ -33,7 +33,7 @@ export default function EventsPage() {
   const past = events.filter((e) => e.status === "past");
 
   return (
-    <div className="pt-24">
+    <div>
       <Script
         id="luma-checkout"
         src="https://embed.lu.ma/checkout-button.js"

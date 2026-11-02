@@ -314,10 +314,10 @@ function VideoView({ episode }: { episode: Episode }) {
     );
   }
 
-  // ── Split: 16:9 video + info left, tracklist right ──
+  // ── Split: 16:9 video + info top/left, tracklist bottom/right ──
   return (
-    <div className="flex-1 flex overflow-hidden">
-      <div className="flex-1 min-w-0 flex flex-col overflow-hidden" style={{ maxWidth: "calc(55vh * 16 / 9)" }}>
+    <div className="flex-1 flex flex-col sm:flex-row overflow-hidden">
+      <div className="shrink-0 sm:flex-1 min-w-0 flex flex-col sm:overflow-hidden" style={{ maxWidth: "calc(55vh * 16 / 9)" }}>
         {/* 16:9 video with expand button */}
         <div className="relative w-full aspect-video shrink-0 overflow-hidden cursor-pointer" onClick={toggle}>
           {videoEl}
@@ -332,24 +332,29 @@ function VideoView({ episode }: { episode: Episode }) {
         </div>
 
         {/* Episode info */}
-        <div className="bg-white shrink-0 px-5 sm:px-10 pt-10 sm:pt-14 pb-8 sm:pb-10 border-t border-black">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-black mb-3">
+        <div className="bg-white shrink-0 px-5 sm:px-10 pt-5 sm:pt-14 pb-5 sm:pb-10 border-t border-black">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-black mb-2 sm:mb-3">
             Ep. {String(episode.number).padStart(3, "0")}
           </p>
           <h1
-            className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-[-0.01em] leading-[1.05] mb-2 text-black"
+            className="text-xl sm:text-3xl lg:text-5xl font-light tracking-[-0.01em] leading-[1.05] mb-1 sm:mb-2 text-black"
             dangerouslySetInnerHTML={{ __html: episode.title }}
           />
-          <p className="text-[11px] tracking-[0.2em] uppercase text-black mb-6">
+          <p className="hidden sm:block text-[11px] tracking-[0.2em] uppercase text-black mb-6">
             {episode.guest}
           </p>
-          <div className="max-w-lg">
-            <div className="flex items-center gap-4 mb-5">
+          <div className="max-w-lg mt-3 sm:mt-0">
+            <div className="flex items-center gap-4 mb-3 sm:mb-5">
               <span className="text-[11px] tracking-[0.1em] text-black tabular-nums w-10">
                 {fmt(currentTime)}
               </span>
-              <div className="flex-1 h-px bg-black cursor-pointer relative" onClick={seekFromBar}>
-                <div className="absolute left-0 top-0 h-full bg-black" style={{ width: `${progress * 100}%` }} />
+              <div
+                className="flex-1 relative cursor-pointer py-3 -my-3"
+                onClick={seekFromBar}
+              >
+                <div className="h-px bg-black relative">
+                  <div className="absolute left-0 top-0 h-full bg-black" style={{ width: `${progress * 100}%` }} />
+                </div>
               </div>
               <span className="text-[11px] tracking-[0.1em] text-black tabular-nums w-10 text-right">
                 {duration > 0 ? fmt(duration) : "--:--"}
@@ -460,13 +465,15 @@ function AudioView({ episode }: { episode: Episode }) {
                 {fmt(currentTime)}
               </span>
               <div
-                className="flex-1 h-px bg-white/20 cursor-pointer relative"
+                className="flex-1 relative cursor-pointer py-3 -my-3"
                 onClick={seekFromBar}
               >
-                <div
-                  className="absolute left-0 top-0 h-full bg-white"
-                  style={{ width: `${progress * 100}%` }}
-                />
+                <div className="h-px bg-white/20 relative">
+                  <div
+                    className="absolute left-0 top-0 h-full bg-white"
+                    style={{ width: `${progress * 100}%` }}
+                  />
+                </div>
               </div>
               <span className="text-[11px] tracking-[0.1em] text-white/35 tabular-nums shrink-0">
                 {duration > 0 ? fmt(duration) : "--:--"}
@@ -507,11 +514,11 @@ function AudioView({ episode }: { episode: Episode }) {
     );
   }
 
-  // ── With tracklist: 16:9 cover + info left, tracklist right ──
+  // ── With tracklist: cover + info top/left, tracklist bottom/right ──
   return (
-    <div className="flex-1 flex overflow-hidden">
-      {/* ── Left: cover + info ── */}
-      <div className="flex-1 min-w-0 flex flex-col overflow-hidden" style={{ maxWidth: "calc(55vh * 16 / 9)" }}>
+    <div className="flex-1 flex flex-col sm:flex-row overflow-hidden">
+      {/* ── Cover + info ── */}
+      <div className="shrink-0 sm:flex-1 min-w-0 flex flex-col sm:overflow-hidden" style={{ maxWidth: "calc(55vh * 16 / 9)" }}>
         {/* Cover image — 16:9 */}
         {episode.coverImage && (
           <div className="relative w-full aspect-video shrink-0 overflow-hidden">
@@ -528,32 +535,34 @@ function AudioView({ episode }: { episode: Episode }) {
         {audio}
 
         {/* Episode info — white below cover */}
-        <div className="bg-white shrink-0 px-5 sm:px-10 pt-10 sm:pt-14 pb-8 sm:pb-10 border-t border-black/10">
-          <p className="text-[11px] tracking-[0.2em] uppercase text-black mb-3">
+        <div className="bg-white shrink-0 px-5 sm:px-10 pt-5 sm:pt-14 pb-5 sm:pb-10 border-t border-black/10">
+          <p className="text-[11px] tracking-[0.2em] uppercase text-black mb-2 sm:mb-3">
             Ep. {String(episode.number).padStart(3, "0")}
           </p>
           <h1
-            className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-[-0.01em] leading-[1.05] mb-2 text-black"
+            className="text-xl sm:text-3xl lg:text-5xl font-light tracking-[-0.01em] leading-[1.05] mb-1 sm:mb-2 text-black"
             dangerouslySetInnerHTML={{ __html: episode.title }}
           />
-          <p className="text-[11px] tracking-[0.2em] uppercase text-black mb-6">
+          <p className="hidden sm:block text-[11px] tracking-[0.2em] uppercase text-black mb-6">
             {episode.guest}
           </p>
 
           {episode.audioUrl ? (
-            <div className="max-w-lg">
-              <div className="flex items-center gap-4 mb-5">
+            <div className="max-w-lg mt-3 sm:mt-0">
+              <div className="flex items-center gap-4 mb-3 sm:mb-5">
                 <span className="text-[11px] tracking-[0.1em] text-black tabular-nums w-10">
                   {fmt(currentTime)}
                 </span>
                 <div
-                  className="flex-1 h-px bg-black cursor-pointer relative"
+                  className="flex-1 relative cursor-pointer py-3 -my-3"
                   onClick={seekFromBar}
                 >
-                  <div
-                    className="absolute left-0 top-0 h-full bg-black"
-                    style={{ width: `${progress * 100}%` }}
-                  />
+                  <div className="h-px bg-black relative">
+                    <div
+                      className="absolute left-0 top-0 h-full bg-black"
+                      style={{ width: `${progress * 100}%` }}
+                    />
+                  </div>
                 </div>
                 <span className="text-[11px] tracking-[0.1em] text-black tabular-nums w-10 text-right">
                   {duration > 0 ? fmt(duration) : "--:--"}
@@ -574,7 +583,7 @@ function AudioView({ episode }: { episode: Episode }) {
         </div>
       </div>
 
-      {/* ── Right: tracklist ── */}
+      {/* ── Tracklist ── */}
       <TracklistPanel
         tracks={episode.tracks}
         chapters={episode.chapters}
@@ -651,7 +660,7 @@ function TracklistPanel({
   const displayData = (hoverDiscogsData?.imageUrl ? hoverDiscogsData : null) ?? activeDiscogsData;
 
   return (
-    <aside className="flex-1 min-w-[320px] flex flex-col bg-white text-black border-l border-black overflow-hidden">
+    <aside className="flex-1 min-w-0 sm:min-w-[320px] flex flex-col bg-white text-black border-l border-black overflow-hidden">
       <header className="px-5 sm:px-6 py-4 border-b border-black shrink-0 bg-black">
         <span className="text-[10px] tracking-[0.25em] uppercase text-white">
           Tracklist
@@ -692,7 +701,7 @@ function TracklistPanel({
               onClick={() => onSeek(item.timeSec)}
               onMouseEnter={() => handleRowEnter(i)}
               onMouseLeave={handleRowLeave}
-              className={`w-full text-left px-5 sm:px-6 py-4 border-b border-black flex items-center gap-4 sm:gap-5 hover:bg-black transition-colors group ${
+              className={`w-full text-left px-5 sm:px-6 py-5 sm:py-4 border-b border-black flex items-center gap-4 sm:gap-5 hover:bg-black transition-colors group ${
                 isActive ? "bg-black/[0.04]" : ""
               }`}
             >

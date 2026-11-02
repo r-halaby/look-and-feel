@@ -57,7 +57,7 @@ export function EpisodeTable() {
           <Link
             key={ep.id}
             href={`/episodes/${ep.id}`}
-            className="flex items-center gap-4 sm:gap-8 py-4 sm:py-5 group"
+            className="flex items-center gap-4 sm:gap-8 py-5 sm:py-5 group"
             onMouseEnter={() => setHoveredId(ep.id)}
             onMouseLeave={() => setHoveredId(null)}
           >
