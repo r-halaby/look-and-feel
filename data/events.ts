@@ -16,7 +16,7 @@ export const events: Event[] = [
   {
     id: "evt-001",
     title: "Look &amp; Feel",
-    date: "2026-10-22",
+    date: "2026-11-23",
     time: "6:30–9 PM",
     location: "Index Greenpoint",
     city: "Brooklyn, NY",

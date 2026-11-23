@@ -23,8 +23,8 @@ export default function Home() {
         <h1 className="text-[11px] tracking-[0.2em] uppercase text-muted">
           Episodes
         </h1>
-        <span className="text-[11px] tracking-[0.2em] uppercase text-muted">
-          Next — {nextAirFormatted}
+        <span className="text-[11px] tracking-[0.2em] uppercase text-muted text-right">
+          <span className="hidden sm:inline">Next — </span>{nextAirFormatted}
         </span>
       </div>
       <EpisodeTable />
